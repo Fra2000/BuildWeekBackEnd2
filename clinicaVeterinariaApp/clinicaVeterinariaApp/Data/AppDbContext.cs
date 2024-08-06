@@ -163,7 +163,7 @@ namespace clinicaVeterinariaApp.Data
 
             modelBuilder.Entity<Users>()
                 .Property(u => u.PasswordHash)
-                .HasMaxLength(50);
+                .HasMaxLength(500);
 
             modelBuilder.Entity<Visite>()
                 .Property(v => v.EsameObiettivo)

@@ -14,7 +14,7 @@ namespace clinicaVeterinariaApp.Models.Veterinario
        
         [Required,EmailAddress,MaxLength(256)]
         public string Email { get; set; }
-        [Required,MaxLength(50)]
+        [Required,MaxLength(500)]
         public string PasswordHash { get; set; }
         [ForeignKey("Ruoli")]
         public int RuoloID { get; set; }
