@@ -180,6 +180,67 @@ namespace clinicaVeterinariaApp.Data
                 new Ruoli { RuoloID = 3, NomeRuolo = "User" }
             );
 
+            modelBuilder.Entity<Armadio>().HasData(
+            new Armadio { ArmadioID = 1, CodiceUnivoco = "AR001" },
+            new Armadio { ArmadioID = 2, CodiceUnivoco = "AR002" },
+            new Armadio { ArmadioID = 3, CodiceUnivoco = "AR003" },
+            new Armadio { ArmadioID = 4, CodiceUnivoco = "AR004" },
+            new Armadio { ArmadioID = 5, CodiceUnivoco = "AR005" }
+        );
+
+            // Seed per i Cassetti
+            modelBuilder.Entity<Cassetto>().HasData(
+                // Armadio 1
+                new Cassetto { CassettoID = 1, NumeroCassetto = 1, ArmadioID = 1 },
+                new Cassetto { CassettoID = 2, NumeroCassetto = 2, ArmadioID = 1 },
+                new Cassetto { CassettoID = 3, NumeroCassetto = 3, ArmadioID = 1 },
+                new Cassetto { CassettoID = 4, NumeroCassetto = 4, ArmadioID = 1 },
+                new Cassetto { CassettoID = 5, NumeroCassetto = 5, ArmadioID = 1 },
+                new Cassetto { CassettoID = 6, NumeroCassetto = 6, ArmadioID = 1 },
+                new Cassetto { CassettoID = 7, NumeroCassetto = 7, ArmadioID = 1 },
+                new Cassetto { CassettoID = 8, NumeroCassetto = 8, ArmadioID = 1 },
+
+                // Armadio 2
+                new Cassetto { CassettoID = 9, NumeroCassetto = 1, ArmadioID = 2 },
+                new Cassetto { CassettoID = 10, NumeroCassetto = 2, ArmadioID = 2 },
+                new Cassetto { CassettoID = 11, NumeroCassetto = 3, ArmadioID = 2 },
+                new Cassetto { CassettoID = 12, NumeroCassetto = 4, ArmadioID = 2 },
+                new Cassetto { CassettoID = 13, NumeroCassetto = 5, ArmadioID = 2 },
+                new Cassetto { CassettoID = 14, NumeroCassetto = 6, ArmadioID = 2 },
+                new Cassetto { CassettoID = 15, NumeroCassetto = 7, ArmadioID = 2 },
+                new Cassetto { CassettoID = 16, NumeroCassetto = 8, ArmadioID = 2 },
+
+                // Armadio 3
+                new Cassetto { CassettoID = 17, NumeroCassetto = 1, ArmadioID = 3 },
+                new Cassetto { CassettoID = 18, NumeroCassetto = 2, ArmadioID = 3 },
+                new Cassetto { CassettoID = 19, NumeroCassetto = 3, ArmadioID = 3 },
+                new Cassetto { CassettoID = 20, NumeroCassetto = 4, ArmadioID = 3 },
+                new Cassetto { CassettoID = 21, NumeroCassetto = 5, ArmadioID = 3 },
+                new Cassetto { CassettoID = 22, NumeroCassetto = 6, ArmadioID = 3 },
+                new Cassetto { CassettoID = 23, NumeroCassetto = 7, ArmadioID = 3 },
+                new Cassetto { CassettoID = 24, NumeroCassetto = 8, ArmadioID = 3 },
+
+                // Armadio 4
+                new Cassetto { CassettoID = 25, NumeroCassetto = 1, ArmadioID = 4 },
+                new Cassetto { CassettoID = 26, NumeroCassetto = 2, ArmadioID = 4 },
+                new Cassetto { CassettoID = 27, NumeroCassetto = 3, ArmadioID = 4 },
+                new Cassetto { CassettoID = 28, NumeroCassetto = 4, ArmadioID = 4 },
+                new Cassetto { CassettoID = 29, NumeroCassetto = 5, ArmadioID = 4 },
+                new Cassetto { CassettoID = 30, NumeroCassetto = 6, ArmadioID = 4 },
+                new Cassetto { CassettoID = 31, NumeroCassetto = 7, ArmadioID = 4 },
+                new Cassetto { CassettoID = 32, NumeroCassetto = 8, ArmadioID = 4 },
+
+                // Armadio 5
+                new Cassetto { CassettoID = 33, NumeroCassetto = 1, ArmadioID = 5 },
+                new Cassetto { CassettoID = 34, NumeroCassetto = 2, ArmadioID = 5 },
+                new Cassetto { CassettoID = 35, NumeroCassetto = 3, ArmadioID = 5 },
+                new Cassetto { CassettoID = 36, NumeroCassetto = 4, ArmadioID = 5 },
+                new Cassetto { CassettoID = 37, NumeroCassetto = 5, ArmadioID = 5 },
+                new Cassetto { CassettoID = 38, NumeroCassetto = 6, ArmadioID = 5 },
+                new Cassetto { CassettoID = 39, NumeroCassetto = 7, ArmadioID = 5 },
+                new Cassetto { CassettoID = 40, NumeroCassetto = 8, ArmadioID = 5 }
+                );
+
 
         }
     }
