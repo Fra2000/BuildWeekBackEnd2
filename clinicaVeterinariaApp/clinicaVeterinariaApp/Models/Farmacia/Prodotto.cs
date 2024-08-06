@@ -9,6 +9,7 @@ namespace clinicaVeterinariaApp.Models.Farmacia
         public int ProdottoID { get; set; }
         [Required, MaxLength(50)]
         public string Nome { get; set; }
+        public string FotoProdotto { get; set; }
         [Required, MaxLength(500)]
         public string ElencoUsi { get; set; }
         [Required, MaxLength(20)]
