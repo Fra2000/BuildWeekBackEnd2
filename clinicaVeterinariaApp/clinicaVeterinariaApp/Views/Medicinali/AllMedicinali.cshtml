@@ -1,18 +1,17 @@
 ﻿@model IEnumerable<clinicaVeterinariaApp.Models.Farmacia.Medicinale>
 
 
-    <h1>Lista dei Medicinali</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID Medicinale</th>
-                <th>Nome Prodotto</th>
-                <th>Prezzo Unitario</th>
-                <th>Elenco Usi</th>
-                <th>ID Cassetto</th>
-            </tr>
-        </thead>
-        <tbody>
+@foreach (var medicinale in Model){
+<div class="card">
+        <img src="@medicinale.Prodotto.FotoProdotto" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@medicinale.Prodotto.Nome</h5>
+        <p class="card-text">@medicinale.Prodotto.ElencoUsi</p>
+        <p class="card-text">@medicinale.Cassetto</p>
+        
+    </div>
+</div>
+}
             @foreach (var medicinale in Model)
             {
                 <tr>
