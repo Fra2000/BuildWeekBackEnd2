@@ -2,6 +2,7 @@
 using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services.Interfaces;
+using System.Threading.Tasks;
 
 public class AccountService : IAccountService
 {
@@ -41,6 +42,42 @@ public class AccountService : IAccountService
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
     }
+
+    public async Task RegisterUserAsync(string nomeUser, string cognomeUser, string email, string password, string prenotazioneToken)
+    {
+        // Verifica il token
+        var proprietario = await _context.Proprietari
+                                         .SingleOrDefaultAsync(p => p.PrenotazioneToken == prenotazioneToken);
+
+        if (proprietario == null)
+        {
+            throw new Exception("Invalid token.");
+        }
+
+        // Crea un nuovo utente
+        var hashedPassword = HashPassword(password);
+        var user = new Users
+        {
+            NomeUser = nomeUser,
+            CognomeUser = cognomeUser,
+            Email = email,
+            PasswordHash = hashedPassword,
+            RuoloID = 3 // Assumiamo che l'ID 3 sia per gli utenti
+        };
+
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync(); // Salva prima l'utente per avere l'ID
+
+        // Associa l'utente al proprietario
+        proprietario.UserID = user.UsersID;
+        _context.Proprietari.Update(proprietario);
+
+        // Salva le modifiche al proprietario
+        await _context.SaveChangesAsync();
+    }
+
+
+
 
     private bool VerifyPasswordHash(string password, string hashedPassword)
     {

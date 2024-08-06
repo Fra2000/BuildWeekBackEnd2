@@ -71,6 +71,27 @@ public class AccountController : Controller
         return RedirectToAction("Login");
     }
 
+    [HttpGet]
+    public IActionResult RegisterUser()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RegisterUser(string nomeUser, string cognomeUser, string email, string password, string prenotazioneToken)
+    {
+        try
+        {
+            await _accountService.RegisterUserAsync(nomeUser, cognomeUser, email, password, prenotazioneToken);
+            return RedirectToAction("Login");
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Error = ex.Message;
+            return View();
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
