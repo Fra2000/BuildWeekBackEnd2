@@ -1,0 +1,21 @@
+﻿@model clinicaVeterinariaApp.Models.Farmacia.Medicinale
+
+<form asp-action="ModificaMedicinale" enctype="multipart/form-data" method="post">
+    <label asp-for="CassettoID">Che Camera scegliere</label>
+    <select asp-for="CassettoID" class="form-control">
+        <option value="" disabled selected>Seleziona un'opzione...</option>
+        @foreach (var cassetto in ViewBag.cassetti)
+        {
+            <option value="@cassetto.CassettoID">@cassetto.NumeroCassetto</option>
+        }
+    </select>
+    <label asp-for="ProdottoID">Che Camera scegliere</label>
+    <select asp-for="ProdottoID" class="form-control">
+        <option value="" disabled selected>Seleziona un'opzione...</option>
+        @foreach (var prodotto in ViewBag.prodotti)
+        {
+            <option value="@prodotto.ProdottoID">@prodotto.Nome</option>
+        }
+    </select>
+    <button class="btn btn-outline-dark m-2">Modifica Medicinale</button>
+</form>
