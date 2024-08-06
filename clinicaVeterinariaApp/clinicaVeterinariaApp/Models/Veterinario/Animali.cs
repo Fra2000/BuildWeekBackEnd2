@@ -14,7 +14,8 @@ namespace clinicaVeterinariaApp.Models.Veterinario
         public string Tipologia { get; set; }
         [Required, MaxLength(50)]
         public string ColoreMantello { get; set; }
-        
+        public string FotoAnimale { get; set; }
+
         public DateTime? DataNascita { get; set; }
         [Required]
         public bool MicrochipBit {  get; set; }=false;

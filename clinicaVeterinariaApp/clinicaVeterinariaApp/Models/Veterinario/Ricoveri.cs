@@ -25,7 +25,6 @@ namespace clinicaVeterinariaApp.Models.Veterinario
         public decimal Costo {  get; set; }
         [Required]
         public bool Attivo {  get; set; }=false;
-        public string FotoBase64 { get; set; }
         public Animali Animali { get; set; }
 
         public ICollection<ContabilizzazioneRicoveri> ContabilizzazioneRicoveri { get; set; }
