@@ -1,0 +1,40 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Ricoveri>
+
+@{
+    ViewData["Title"] = "Elenco Ricoveri";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Aggiungi Nuovo Ricovero</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipologia</th>
+            <th>Data Inizio</th>
+            <th>Data Fine</th>
+            <th>Costo</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RicoveriID</td>
+                <td>@item.Tipologia</td>
+                <td>@item.Datainizioricovero.ToShortDateString()</td>
+                <td>@item.DataFineRicovero.ToShortDateString()</td>
+                <td>@item.Costo</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RicoveriID">Modifica</a> |
+                    <a asp-action="Details" asp-route-id="@item.RicoveriID">Dettagli</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RicoveriID">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

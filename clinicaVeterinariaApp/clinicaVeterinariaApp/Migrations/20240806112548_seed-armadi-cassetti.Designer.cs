@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using clinicaVeterinariaApp.Data;
 
@@ -11,9 +12,11 @@ using clinicaVeterinariaApp.Data;
 namespace clinicaVeterinariaApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806112548_seed-armadi-cassetti")]
+    partial class seedarmadicassetti
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -583,21 +586,10 @@ namespace clinicaVeterinariaApp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PrenotazioneToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("ProprietarioID");
 
                     b.HasIndex("Codicefiscale")
                         .IsUnique();
-
-                    b.HasIndex("UserID")
-                        .IsUnique()
-                        .HasFilter("[UserID] IS NOT NULL");
 
                     b.ToTable("Proprietari");
                 });
@@ -697,8 +689,8 @@ namespace clinicaVeterinariaApp.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("RuoloID")
                         .HasColumnType("int");
@@ -821,16 +813,6 @@ namespace clinicaVeterinariaApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Ricoveri");
-                });
-
-            modelBuilder.Entity("clinicaVeterinariaApp.Models.Veterinario.Proprietario", b =>
-                {
-                    b.HasOne("clinicaVeterinariaApp.Models.Veterinario.Users", "User")
-                        .WithOne()
-                        .HasForeignKey("clinicaVeterinariaApp.Models.Veterinario.Proprietario", "UserID")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("clinicaVeterinariaApp.Models.Veterinario.Ricoveri", b =>

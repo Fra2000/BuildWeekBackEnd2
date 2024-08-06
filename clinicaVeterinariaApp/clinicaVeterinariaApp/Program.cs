@@ -23,17 +23,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddScoped<IAccountService, AccountService>();
 
 // Aggiungi i servizi per i controllori e le viste
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-// Configura la pipeline delle richieste HTTP
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
-}
 
+// Configura la pipeline delle richieste HTTP
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
