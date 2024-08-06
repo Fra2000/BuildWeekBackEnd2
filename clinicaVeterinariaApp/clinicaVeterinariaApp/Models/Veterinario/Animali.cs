@@ -25,7 +25,7 @@ namespace clinicaVeterinariaApp.Models.Veterinario
         public int ProprietarioID { get; set; }
         public Proprietario Proprietario { get; set; }
         public ICollection<Visite> Visite {  get; set; }
-        public ICollection<Ricovero> Ricovero { get; set; }
+        public ICollection<Ricoveri> Ricoveri { get; set; }
        
        
 

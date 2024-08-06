@@ -6,7 +6,7 @@ namespace clinicaVeterinariaApp.Models.Farmacia
     public class Prodotto
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProdottoId { get; set; }
+        public int ProdottoID { get; set; }
         [Required, MaxLength(50)]
         public string Nome { get; set; }
         [Required, MaxLength(500)]
@@ -17,6 +17,7 @@ namespace clinicaVeterinariaApp.Models.Farmacia
         public Fornitore Fornitore { get; set; }
 
         public ICollection<Vendita> Vendita { get; set; }
+        public ICollection<Medicinale> Medicinale { get; set; }
 
     }
 }

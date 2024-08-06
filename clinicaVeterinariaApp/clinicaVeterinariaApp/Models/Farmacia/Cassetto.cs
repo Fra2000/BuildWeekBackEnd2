@@ -6,10 +6,12 @@ namespace clinicaVeterinariaApp.Models.Farmacia
     public class Cassetto
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CassettoId { get; set; }
+        public int CassettoID { get; set; }
         [Required]
         public int NumeroCassetto { get; set; }
-        public Armadio armadio { get; set; }
+        [ForeignKey("Armadio")]
+        public int ArmadioID { get; set; }
+        public Armadio Armadio { get; set; }
         public ICollection<Medicinale> Medicinale { get; set; }
     }
 }

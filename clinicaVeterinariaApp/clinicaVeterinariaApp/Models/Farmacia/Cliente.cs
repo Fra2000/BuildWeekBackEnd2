@@ -6,7 +6,7 @@ namespace clinicaVeterinariaApp.Models.Farmacia
     public class Cliente
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ClienteId { get; set; }
+        public int ClienteID { get; set; }
         [Required, MaxLength(16)]
         public string CodiceFiscale { get; set; }
         [Required, MaxLength(50)]

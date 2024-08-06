@@ -28,6 +28,6 @@ namespace clinicaVeterinariaApp.Models.Veterinario
         public string FotoBase64 { get; set; }
         public Animali Animali { get; set; }
 
-
+        public ICollection<ContabilizzazioneRicoveri> ContabilizzazioneRicoveri { get; set; }
     }
 }

@@ -6,11 +6,11 @@ namespace clinicaVeterinariaApp.Models.Farmacia
     public class Vendita
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int VenditaId { get; set; }
+        public int VenditaID { get; set; }
         [Required]
-        public int ClienteId { get; set; }
+        public int ClienteID { get; set; }
         [Required]
-        public int ProdotttoId { get; set; }
+        public int ProdottoID { get; set; }
         [Required]
 
         public DateTime DataVendita { get; set; } = DateTime.Now;

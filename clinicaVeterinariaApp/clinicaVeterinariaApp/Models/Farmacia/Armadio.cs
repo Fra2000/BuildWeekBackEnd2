@@ -6,7 +6,8 @@ namespace clinicaVeterinariaApp.Models.Farmacia
     public class Armadio
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ArmadioId { get; set; }
+        public int ArmadioID { get; set; }
+       
         [Required, MaxLength(50)]
         public string CodiceUnivoco { get; set; }
 
