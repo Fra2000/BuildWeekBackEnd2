@@ -173,6 +173,13 @@ namespace clinicaVeterinariaApp.Data
                 .Property(v => v.DescrizioneCura)
                 .HasMaxLength(500);
 
+            // Seed Ruoli
+            modelBuilder.Entity<Ruoli>().HasData(
+                new Ruoli { RuoloID = 1, NomeRuolo = "Veterinario" },
+                new Ruoli { RuoloID = 2, NomeRuolo = "Farmacista" },
+                new Ruoli { RuoloID = 3, NomeRuolo = "User" }
+            );
+
 
         }
     }
