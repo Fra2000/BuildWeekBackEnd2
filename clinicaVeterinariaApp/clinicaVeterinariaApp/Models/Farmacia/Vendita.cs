@@ -18,6 +18,7 @@ namespace clinicaVeterinariaApp.Models.Farmacia
         public string NumeroRicettaMedica { get; set; }
         [Required, Range(1, 20)]
         public int Quantita { get; set; }
+        public bool StatoVendita { get; set; }=false;
 
         public Cliente Cliente { get; set; }
         public Prodotto Prodotto { get; set; }
