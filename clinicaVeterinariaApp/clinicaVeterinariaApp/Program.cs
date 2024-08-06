@@ -1,6 +1,6 @@
 using clinicaVeterinariaApp.Data;
-using clinicaVeterinariaApp.Services.Interfaces;
 using clinicaVeterinariaApp.Services;
+using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,13 +14,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IRicoveriService, RicoveriService>();
 
 // Add services to the container.
+builder.Services.AddTransient<IMedicinaleService, MedicinaleService>();
+
+// Aggiungi i controller con le viste
 builder.Services.AddControllersWithViews();
 
 
 
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
