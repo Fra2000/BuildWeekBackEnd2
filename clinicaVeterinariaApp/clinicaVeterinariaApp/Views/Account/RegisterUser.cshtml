@@ -1,0 +1,44 @@
+﻿@model clinicaVeterinariaApp.Models.RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Register User";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="RegisterUser" method="post">
+    <div class="form-group">
+        <label asp-for="NomeUser" class="control-label"></label>
+        <input asp-for="NomeUser" class="form-control" />
+        <span asp-validation-for="NomeUser" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CognomeUser" class="control-label"></label>
+        <input asp-for="CognomeUser" class="form-control" />
+        <span asp-validation-for="CognomeUser" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrenotazioneToken" class="control-label"></label>
+        <input asp-for="PrenotazioneToken" class="form-control" />
+        <span asp-validation-for="PrenotazioneToken" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+</form>

@@ -82,6 +82,13 @@ namespace clinicaVeterinariaApp.Data
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RuoloID);
 
+            // Configurazioni per Proprietario
+            modelBuilder.Entity<Proprietario>()
+                .HasOne(p => p.User)
+                .WithOne() // Una relazione uno-a-uno
+                .HasForeignKey<Proprietario>(p => p.UserID)
+                .OnDelete(DeleteBehavior.SetNull); // Gestisce la cancellazione
+
             // Configurazioni di indici univoci
             modelBuilder.Entity<Cliente>()
                 .HasIndex(c => c.CodiceFiscale)
@@ -163,7 +170,7 @@ namespace clinicaVeterinariaApp.Data
 
             modelBuilder.Entity<Users>()
                 .Property(u => u.PasswordHash)
-                .HasMaxLength(50);
+                .HasMaxLength(500);
 
             modelBuilder.Entity<Visite>()
                 .Property(v => v.EsameObiettivo)
