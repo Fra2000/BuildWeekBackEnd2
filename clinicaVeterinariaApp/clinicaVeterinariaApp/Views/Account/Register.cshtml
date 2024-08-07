@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label for="nomeUser">Nome</label>
+        <input type="text" name="nomeUser" class="form-control" id="nomeUser" required />
+    </div>
+    <div class="form-group">
+        <label for="cognomeUser">Cognome</label>
+        <input type="text" name="cognomeUser" class="form-control" id="cognomeUser" required />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-control" id="email" required />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" id="password" required />
+    </div>
+    <div class="form-group">
+        <label for="ruoloID">Role</label>
+        <select name="ruoloID" class="form-control" id="ruoloID" required>
+            @foreach (var role in ViewBag.Ruoli as SelectList)
+            {
+                <option value="@role.Value">@role.Text</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}

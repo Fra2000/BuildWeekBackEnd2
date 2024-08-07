@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using clinicaVeterinariaApp.Data;
 
@@ -11,9 +12,11 @@ using clinicaVeterinariaApp.Data;
 namespace clinicaVeterinariaApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806130342_ModificaLunghezzaPassword")]
+    partial class ModificaLunghezzaPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,33 +41,6 @@ namespace clinicaVeterinariaApp.Migrations
                     b.HasKey("ArmadioID");
 
                     b.ToTable("Armadi");
-
-                    b.HasData(
-                        new
-                        {
-                            ArmadioID = 1,
-                            CodiceUnivoco = "AR001"
-                        },
-                        new
-                        {
-                            ArmadioID = 2,
-                            CodiceUnivoco = "AR002"
-                        },
-                        new
-                        {
-                            ArmadioID = 3,
-                            CodiceUnivoco = "AR003"
-                        },
-                        new
-                        {
-                            ArmadioID = 4,
-                            CodiceUnivoco = "AR004"
-                        },
-                        new
-                        {
-                            ArmadioID = 5,
-                            CodiceUnivoco = "AR005"
-                        });
                 });
 
             modelBuilder.Entity("clinicaVeterinariaApp.Models.Farmacia.Cassetto", b =>
@@ -86,248 +62,6 @@ namespace clinicaVeterinariaApp.Migrations
                     b.HasIndex("ArmadioID");
 
                     b.ToTable("Cassetto");
-
-                    b.HasData(
-                        new
-                        {
-                            CassettoID = 1,
-                            ArmadioID = 1,
-                            NumeroCassetto = 1
-                        },
-                        new
-                        {
-                            CassettoID = 2,
-                            ArmadioID = 1,
-                            NumeroCassetto = 2
-                        },
-                        new
-                        {
-                            CassettoID = 3,
-                            ArmadioID = 1,
-                            NumeroCassetto = 3
-                        },
-                        new
-                        {
-                            CassettoID = 4,
-                            ArmadioID = 1,
-                            NumeroCassetto = 4
-                        },
-                        new
-                        {
-                            CassettoID = 5,
-                            ArmadioID = 1,
-                            NumeroCassetto = 5
-                        },
-                        new
-                        {
-                            CassettoID = 6,
-                            ArmadioID = 1,
-                            NumeroCassetto = 6
-                        },
-                        new
-                        {
-                            CassettoID = 7,
-                            ArmadioID = 1,
-                            NumeroCassetto = 7
-                        },
-                        new
-                        {
-                            CassettoID = 8,
-                            ArmadioID = 1,
-                            NumeroCassetto = 8
-                        },
-                        new
-                        {
-                            CassettoID = 9,
-                            ArmadioID = 2,
-                            NumeroCassetto = 1
-                        },
-                        new
-                        {
-                            CassettoID = 10,
-                            ArmadioID = 2,
-                            NumeroCassetto = 2
-                        },
-                        new
-                        {
-                            CassettoID = 11,
-                            ArmadioID = 2,
-                            NumeroCassetto = 3
-                        },
-                        new
-                        {
-                            CassettoID = 12,
-                            ArmadioID = 2,
-                            NumeroCassetto = 4
-                        },
-                        new
-                        {
-                            CassettoID = 13,
-                            ArmadioID = 2,
-                            NumeroCassetto = 5
-                        },
-                        new
-                        {
-                            CassettoID = 14,
-                            ArmadioID = 2,
-                            NumeroCassetto = 6
-                        },
-                        new
-                        {
-                            CassettoID = 15,
-                            ArmadioID = 2,
-                            NumeroCassetto = 7
-                        },
-                        new
-                        {
-                            CassettoID = 16,
-                            ArmadioID = 2,
-                            NumeroCassetto = 8
-                        },
-                        new
-                        {
-                            CassettoID = 17,
-                            ArmadioID = 3,
-                            NumeroCassetto = 1
-                        },
-                        new
-                        {
-                            CassettoID = 18,
-                            ArmadioID = 3,
-                            NumeroCassetto = 2
-                        },
-                        new
-                        {
-                            CassettoID = 19,
-                            ArmadioID = 3,
-                            NumeroCassetto = 3
-                        },
-                        new
-                        {
-                            CassettoID = 20,
-                            ArmadioID = 3,
-                            NumeroCassetto = 4
-                        },
-                        new
-                        {
-                            CassettoID = 21,
-                            ArmadioID = 3,
-                            NumeroCassetto = 5
-                        },
-                        new
-                        {
-                            CassettoID = 22,
-                            ArmadioID = 3,
-                            NumeroCassetto = 6
-                        },
-                        new
-                        {
-                            CassettoID = 23,
-                            ArmadioID = 3,
-                            NumeroCassetto = 7
-                        },
-                        new
-                        {
-                            CassettoID = 24,
-                            ArmadioID = 3,
-                            NumeroCassetto = 8
-                        },
-                        new
-                        {
-                            CassettoID = 25,
-                            ArmadioID = 4,
-                            NumeroCassetto = 1
-                        },
-                        new
-                        {
-                            CassettoID = 26,
-                            ArmadioID = 4,
-                            NumeroCassetto = 2
-                        },
-                        new
-                        {
-                            CassettoID = 27,
-                            ArmadioID = 4,
-                            NumeroCassetto = 3
-                        },
-                        new
-                        {
-                            CassettoID = 28,
-                            ArmadioID = 4,
-                            NumeroCassetto = 4
-                        },
-                        new
-                        {
-                            CassettoID = 29,
-                            ArmadioID = 4,
-                            NumeroCassetto = 5
-                        },
-                        new
-                        {
-                            CassettoID = 30,
-                            ArmadioID = 4,
-                            NumeroCassetto = 6
-                        },
-                        new
-                        {
-                            CassettoID = 31,
-                            ArmadioID = 4,
-                            NumeroCassetto = 7
-                        },
-                        new
-                        {
-                            CassettoID = 32,
-                            ArmadioID = 4,
-                            NumeroCassetto = 8
-                        },
-                        new
-                        {
-                            CassettoID = 33,
-                            ArmadioID = 5,
-                            NumeroCassetto = 1
-                        },
-                        new
-                        {
-                            CassettoID = 34,
-                            ArmadioID = 5,
-                            NumeroCassetto = 2
-                        },
-                        new
-                        {
-                            CassettoID = 35,
-                            ArmadioID = 5,
-                            NumeroCassetto = 3
-                        },
-                        new
-                        {
-                            CassettoID = 36,
-                            ArmadioID = 5,
-                            NumeroCassetto = 4
-                        },
-                        new
-                        {
-                            CassettoID = 37,
-                            ArmadioID = 5,
-                            NumeroCassetto = 5
-                        },
-                        new
-                        {
-                            CassettoID = 38,
-                            ArmadioID = 5,
-                            NumeroCassetto = 6
-                        },
-                        new
-                        {
-                            CassettoID = 39,
-                            ArmadioID = 5,
-                            NumeroCassetto = 7
-                        },
-                        new
-                        {
-                            CassettoID = 40,
-                            ArmadioID = 5,
-                            NumeroCassetto = 8
-                        });
                 });
 
             modelBuilder.Entity("clinicaVeterinariaApp.Models.Farmacia.Cliente", b =>
@@ -583,21 +317,10 @@ namespace clinicaVeterinariaApp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PrenotazioneToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("ProprietarioID");
 
                     b.HasIndex("Codicefiscale")
                         .IsUnique();
-
-                    b.HasIndex("UserID")
-                        .IsUnique()
-                        .HasFilter("[UserID] IS NOT NULL");
 
                     b.ToTable("Proprietari");
                 });
@@ -821,16 +544,6 @@ namespace clinicaVeterinariaApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Ricoveri");
-                });
-
-            modelBuilder.Entity("clinicaVeterinariaApp.Models.Veterinario.Proprietario", b =>
-                {
-                    b.HasOne("clinicaVeterinariaApp.Models.Veterinario.Users", "User")
-                        .WithOne()
-                        .HasForeignKey("clinicaVeterinariaApp.Models.Veterinario.Proprietario", "UserID")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("clinicaVeterinariaApp.Models.Veterinario.Ricoveri", b =>
