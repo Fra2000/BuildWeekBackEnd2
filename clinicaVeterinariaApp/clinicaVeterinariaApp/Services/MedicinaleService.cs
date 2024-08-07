@@ -40,12 +40,47 @@ namespace clinicaVeterinariaApp.Services
             await _context.SaveChangesAsync();
         }
 
+        //***********************************************
+        //FUNZIONE CHE FA VEDERE TUTTI I MEDICINALI
         public async Task<IEnumerable<Medicinale>> TuttiMedicinali()
         {
             return await _context
-                .Medicinali.Include(m => m.Prodotto) // Include la navigazione al Prodotto
-                .Include(m => m.Cassetto) // Include la navigazione al Cassetto, se necessario
+                .Medicinali.Include(m => m.Prodotto)
+                .Include(m => m.Cassetto)
+                .ThenInclude(c => c.Armadio)
                 .ToListAsync();
+        }
+
+        //***********************************************
+        //FUNZIONE CHE ELIMINA MEDICINALE
+        public async Task DeleteMedicinaleCall(int medicinaleId)
+        {
+            var medicinale = await _context.Medicinali.FindAsync(medicinaleId);
+
+            if (medicinale != null)
+            {
+                _context.Medicinali.Remove(medicinale);
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        //***********************************************
+        //FUNZIONE CHE AGGIORNA IL MEDICINALE
+        public async Task ModificaMed(Medicinale M)
+        {
+            // Trova il medicinale esistente
+            var medicinale = await _context.Medicinali.FindAsync(M.MedicinaleID);
+
+            if (medicinale != null)
+            {
+                // Aggiorna le proprietà
+                medicinale.ProdottoID = M.ProdottoID;
+                medicinale.CassettoID = M.CassettoID;
+
+                // Salva le modifiche
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

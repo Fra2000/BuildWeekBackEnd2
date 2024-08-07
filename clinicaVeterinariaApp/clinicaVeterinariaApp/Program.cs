@@ -33,6 +33,7 @@ builder.Services.AddScoped<IContabilizzazioneRicoveriService, ContabilizzazioneR
 
 
 
+builder.Services.AddTransient<IVenditeService, VenditeService>();
 
 // Aggiungi i servizi per i controllori e le viste
 builder.Services.AddControllersWithViews();
