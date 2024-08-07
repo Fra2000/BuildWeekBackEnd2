@@ -32,6 +32,6 @@ namespace clinicaVeterinariaApp.Models.Veterinario
 
         public ICollection<Animali> Animali { get; set; }
 
-        public string? PrenotazioneToken { get; set; }
+      
     }
 }
