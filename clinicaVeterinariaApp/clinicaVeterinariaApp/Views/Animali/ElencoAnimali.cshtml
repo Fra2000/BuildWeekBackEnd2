@@ -1,0 +1,32 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Animali>
+
+<h2>Elenco Animali</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tipologia</th>
+            <th>Colore Mantello</th>
+            <th>Data Nascita</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var animale in Model)
+        {
+            <tr>
+                <td>@animale.NomeAnimale</td>
+                <td>@animale.Tipologia</td>
+                <td>@animale.ColoreMantello</td>
+                <td>@animale.DataNascita?.ToShortDateString()</td>
+                <td>
+                    <a href="@Url.Action("DettagliAnimale", new { id = animale.AnimaleID })">Dettagli</a> |
+                    <a href="@Url.Action("ModificaAnimale", new { id = animale.AnimaleID })">Modifica</a> |
+                    <a href="@Url.Action("EliminaAnimale", new { id = animale.AnimaleID })">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("CreazioneAnimale")" class="btn btn-primary">Aggiungi Nuovo Animale</a>

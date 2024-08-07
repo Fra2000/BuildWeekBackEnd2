@@ -1,5 +1,6 @@
 using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Veterinario;
+using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 // Aggiungi i servizi di account
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAnimaliService, AnimaliService>();
+builder.Services.AddScoped<ProvaService>();
 
 // Aggiungi i servizi per i controllori e le viste
 builder.Services.AddControllersWithViews();
