@@ -16,5 +16,7 @@ namespace clinicaVeterinariaApp.Models.Veterinario
         [Required]
         public string Codicefiscale { get; set; }
         public ICollection<Animali> Animali { get; set; }
+
+        public string? PrenotazioneToken { get; set; }
     }
 }

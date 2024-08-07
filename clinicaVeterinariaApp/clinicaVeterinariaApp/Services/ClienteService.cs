@@ -16,13 +16,15 @@ namespace clinicaVeterinariaApp.Services
             _dbContext = appDbContext;
         }
 
-
+        //Creazione Cliente 
         public async Task creazioneClienteAsync(string CodiceFiscale, string Nome, string Indirizzo)
         {
             _dbContext.Add(new Cliente { CodiceFiscale = CodiceFiscale, Indirizzo = Indirizzo, Nome = Nome });
             await _dbContext.SaveChangesAsync();
         }
 
+
+        //Eliminazione cliente 
         public async Task eliminazioneClienteAsync(int ClienteID)
         {
             var cliente = await _dbContext.Clienti.SingleAsync(c => c.ClienteID == ClienteID);
@@ -30,12 +32,16 @@ namespace clinicaVeterinariaApp.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Cliente>> elncoCliente() => await _dbContext.Clienti.ToListAsync();
+
+        //Elenco clienti
+        public async Task<IEnumerable<Cliente>> elencoClientiAsync() => await _dbContext.Clienti.ToListAsync();
         
 
+        //Modifica
         public async Task<bool> modificaClienteAsync(int ClienteID, string CodiceFiscale, string Nome, string Indirizzo)
         {
             var cliente = await _dbContext.Clienti.SingleOrDefaultAsync(c => c.ClienteID == ClienteID);
+
             if (cliente == null)
             {
                 return false;
@@ -50,6 +56,20 @@ namespace clinicaVeterinariaApp.Services
 
             return true;
         }
+
+
+
+        public async Task<Cliente> getClienteByIdAsync(int id)
+        {
+            return await _dbContext.Clienti.SingleOrDefaultAsync(c => c.ClienteID == id);
+
+
+        }
+
+
+
+
+
     }
 }
 

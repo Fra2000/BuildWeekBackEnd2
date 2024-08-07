@@ -24,6 +24,14 @@
 
   <ItemGroup>
     <Folder Include="Services\Interfaces\" />
+    <Folder Include="Views\Cliente\" />
+    <Folder Include="Views\Fornitore\" />
+    <Folder Include="Views\Proprietario\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Cliente\" />
+    <None Remove="Views\Fornitore\" />
+    <None Remove="Views\Proprietario\" />
+  </ItemGroup>
 </Project>

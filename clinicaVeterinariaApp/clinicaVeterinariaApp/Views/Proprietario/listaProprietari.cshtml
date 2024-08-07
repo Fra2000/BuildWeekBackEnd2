@@ -1,0 +1,53 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Proprietario>
+
+@{
+    ViewData["Title"] = "Lista Proprietari";
+}
+
+<h2>Lista Proprietari</h2>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Codice Fiscale</th>
+                <th>Data di Nascita</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var proprietario in Model)
+            {
+                <tr>
+                    <td>@proprietario.ProprietarioID</td>
+                    <td>@proprietario.Nome</td>
+                    <td>@proprietario.Cognome</td>
+                    <td>@proprietario.Codicefiscale</td>
+                    <td>@proprietario.DataNascita.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="modificaProprietario" asp-route-id="@proprietario.ProprietarioID" class="btn btn-primary">Modifica</a>
+                        <a asp-action="eliminaProprietario" asp-route-id="@proprietario.ProprietarioID" class="btn btn-danger">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+}
+
+
+
+
+
+else
+{
+<div class="alert alert-warning">Ancora nessun Proprietario</div>
+<a asp-action="creazioneProprietario" class="btn btn-primary">Aggiungi Proprietario</a>
+
+
+}
