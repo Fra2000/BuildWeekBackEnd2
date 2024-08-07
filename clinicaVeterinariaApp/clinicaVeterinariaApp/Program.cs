@@ -26,6 +26,13 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRicoveriService, RicoveriService>();
 // Add services to the container.
 builder.Services.AddTransient<IMedicinaleService, MedicinaleService>();
+// servizio per le visite
+builder.Services.AddScoped<IVisiteService, VisiteService>();
+// servizio per le contabilizzazioni
+builder.Services.AddScoped<IContabilizzazioneRicoveriService, ContabilizzazioneRicoveriService>();
+
+
+
 
 // Aggiungi i servizi per i controllori e le viste
 builder.Services.AddControllersWithViews();

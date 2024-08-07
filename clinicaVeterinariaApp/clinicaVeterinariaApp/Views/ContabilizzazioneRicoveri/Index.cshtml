@@ -1,0 +1,37 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.ContabilizzazioneRicoveri>
+
+@{
+    ViewData["Title"] = "Elenco Contabilizzazioni Ricoveri";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Contabilizzazione</th>
+            <th>ID Ricovero</th>
+            <th>Data Contabilizzazione</th>
+            <th>Importo</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ContabilizzazioneID</td>
+                <td>@item.RicoveroID</td>
+                <td>@item.DataContabilizzazione.ToShortDateString()</td>
+                <td>@item.Importo.ToString("C")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ContabilizzazioneID">Dettagli</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ContabilizzazioneID">Modifica</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ContabilizzazioneID">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create">Aggiungi Nuova Contabilizzazione</a>

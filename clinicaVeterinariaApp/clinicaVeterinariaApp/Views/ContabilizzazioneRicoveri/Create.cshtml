@@ -1,0 +1,33 @@
+﻿@model clinicaVeterinariaApp.Models.Veterinario.ContabilizzazioneRicoveri
+
+@{
+    ViewData["Title"] = "Aggiungi Nuova Contabilizzazione";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="RicoveroID" class="control-label"></label>
+        <input asp-for="RicoveroID" class="form-control" />
+        <span asp-validation-for="RicoveroID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataContabilizzazione" class="control-label"></label>
+        <input asp-for="DataContabilizzazione" class="form-control" type="date" />
+        <span asp-validation-for="DataContabilizzazione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Importo" class="control-label"></label>
+        <input asp-for="Importo" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Importo" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crea</button>
+</form>
+
+<a href="Index">Torna all'elenco delle contabilizzazioni</a>
