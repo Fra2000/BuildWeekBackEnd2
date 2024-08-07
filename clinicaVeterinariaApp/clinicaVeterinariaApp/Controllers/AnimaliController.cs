@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using clinicaVeterinariaApp.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.IO;
-using System.Linq;
+
 
 namespace clinicaVeterinariaApp.Controllers
 {
