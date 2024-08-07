@@ -33,11 +33,16 @@ namespace clinicaVeterinariaApp.Controllers
         //SALVA IL FORM
         public async Task<IActionResult> SalvaMedicinale(Medicinale medicinale)
         {
-            Console.WriteLine($"queste sono le informazioni di medicinale su salva medicinale{medicinale.CassettoID}");
-            Console.WriteLine($"queste sono le informazioni di medicinale su salva medicinale{medicinale.ProdottoID}");
+            Console.WriteLine(
+                $"queste sono le informazioni di medicinale su salva medicinale{medicinale.CassettoID}"
+            );
+            Console.WriteLine(
+                $"queste sono le informazioni di medicinale su salva medicinale{medicinale.ProdottoID}"
+            );
             await _MedicineServ.CreateMedicinali(medicinale);
             return RedirectToAction("Index", "Home");
         }
+
         //*****************************************************
         //FUNZIONI CHE FA VEDERE TUTTI I MEDICINALI
         public async Task<IActionResult> AllMedicinali()
@@ -55,6 +60,7 @@ namespace clinicaVeterinariaApp.Controllers
 
             return RedirectToAction("AllMedicinali");
         }
+
         //*****************************************************
         //FUNZIONE CHE FA UPDATE
 
@@ -79,18 +85,13 @@ namespace clinicaVeterinariaApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ModificaMedicinale(Medicinale medicinale)
         {
-            if (ModelState.IsValid)
-            {
-                await _MedicineServ.ModificaMed(medicinale);
-                return RedirectToAction("AllMedicinali");
-            }
+            Console.WriteLine(medicinale.MedicinaleID);
+            Console.WriteLine(medicinale.ProdottoID);
+            Console.WriteLine(medicinale.CassettoID);
 
-            // In caso di errore, ripresenta il modulo di modifica
-            ViewBag.Cassetti = await _MedicineServ.GetAllCassetti();
-            ViewBag.Prodotti = await _MedicineServ.GetAllProdotti();
-
+            await _MedicineServ.ModificaMed(medicinale);
             return RedirectToAction("AllMedicinali");
+           
         }
-
     }
 }

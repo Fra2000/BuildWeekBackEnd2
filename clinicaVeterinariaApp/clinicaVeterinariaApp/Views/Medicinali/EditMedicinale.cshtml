@@ -1,6 +1,7 @@
 ﻿@model clinicaVeterinariaApp.Models.Farmacia.Medicinale
 
 <form asp-action="ModificaMedicinale" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="MedicinaleID" value="@Model.MedicinaleID" />
     <label asp-for="CassettoID">Che Camera scegliere</label>
     <select asp-for="CassettoID" class="form-control">
         <option value="" disabled selected>Seleziona un'opzione...</option>

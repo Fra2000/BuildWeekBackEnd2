@@ -69,6 +69,9 @@ namespace clinicaVeterinariaApp.Services
         //FUNZIONE CHE AGGIORNA IL MEDICINALE
         public async Task ModificaMed(Medicinale M)
         {
+            Console.WriteLine(M.MedicinaleID);
+            Console.WriteLine(M.ProdottoID);
+            Console.WriteLine(M.CassettoID);
             // Trova il medicinale esistente
             var medicinale = await _context.Medicinali.FindAsync(M.MedicinaleID);
 
