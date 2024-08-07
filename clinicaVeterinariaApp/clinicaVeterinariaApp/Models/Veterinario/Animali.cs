@@ -16,6 +16,7 @@ namespace clinicaVeterinariaApp.Models.Veterinario
 
         [Required, MaxLength(50)]
         public string ColoreMantello { get; set; }
+        public string FotoAnimale { get; set; }
 
         public string? FotoAnimale { get; set; } // Cambiato a nullable
 

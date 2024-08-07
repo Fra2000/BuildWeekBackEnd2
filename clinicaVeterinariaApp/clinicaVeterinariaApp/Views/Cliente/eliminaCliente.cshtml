@@ -1,0 +1,40 @@
+﻿@model clinicaVeterinariaApp.Models.Farmacia.Cliente
+
+@{
+    ViewData["Title"] = "Elimina Cliente";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Sei sicuro di voler eliminare questo cliente?</h3>
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Codice Fiscale
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CodiceFiscale
+        </dd>
+        <dt class="col-sm-2">
+            Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Nome
+        </dd>
+        <dt class="col-sm-2">
+            Indirizzo
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Indirizzo
+        </dd>
+    </dl>
+
+    <form asp-action="eliminaCliente" method="post">
+        <input type="hidden" asp-for="ClienteID" />
+        <input type="hidden" name="confirmation" value="yes" />
+        <input type="submit" value="Elimina" class="btn btn-danger" /> |
+        <a asp-action="listaClienti" class="btn btn-secondary">Annulla</a>
+    </form>
+</div>
