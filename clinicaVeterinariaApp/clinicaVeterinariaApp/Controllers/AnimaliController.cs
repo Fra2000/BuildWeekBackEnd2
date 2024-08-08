@@ -150,13 +150,21 @@ namespace clinicaVeterinariaApp.Controllers
             return RedirectToAction(nameof(ElencoAnimali));
         }
 
-        public IActionResult CercaAnimali(string query)
+        public async Task<IActionResult> CercaAnimali(string query)
         {
-            var animali = _context.Animali
+            if (!string.IsNullOrWhiteSpace(query)) 
+            { 
+            var animali =  _context.Animali
                 .Where(a => a.NomeAnimale.Contains(query) || (a.MicrochipNumber != null && a.MicrochipNumber.Contains(query)))
                 .ToList();
 
-            return PartialView("_AnimaliPartial", animali);
+            return View("ElencoAnimali", animali);
+            }
+            else
+            {
+                var risultato = await _animaliService.GetAllAnimaliAsync();
+                return View("ElencoAnimali", risultato);
+            }
         }
 
     }
