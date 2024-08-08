@@ -1,10 +1,12 @@
 ﻿
+using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace clinicaVeterinariaApp.Controllers
 {
@@ -15,9 +17,12 @@ namespace clinicaVeterinariaApp.Controllers
 
 		private readonly IProprietarioService _proprietarioService;
 
-        public ProprietarioController(ILogger<ProprietarioController> logger, IProprietarioService proprietarioService)
+        private readonly AppDbContext _context; 
+
+        public ProprietarioController(ILogger<ProprietarioController> logger, AppDbContext context,  IProprietarioService proprietarioService)
 		{
             _logger = logger;
+            _context = context;
 
 
             _proprietarioService = proprietarioService;
@@ -114,7 +119,7 @@ namespace clinicaVeterinariaApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> eliminaCliente(int id, string confirmation)
+        public async Task<IActionResult> eliminaProprietario(int id, string confirmation)
         {
             if (confirmation == "yes")
             {
@@ -123,6 +128,19 @@ namespace clinicaVeterinariaApp.Controllers
             }
             return RedirectToAction("listaProprietari");
         }
+
+
+
+        // Metodo di ricerca
+        public IActionResult CercaProprietari(string query)
+        {
+            var proprietari = _context.Proprietari
+                .Where(p => p.Codicefiscale.Contains(query) || p.Nome.Contains(query) || p.Cognome.Contains(query))
+                .ToList();
+
+            return PartialView("_ProprietariPartial", proprietari);
+        }
+
 
     }
 }

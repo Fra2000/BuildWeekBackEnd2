@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Proprietario>
 
-@{
-    ViewData["Title"] = "Lista Proprietari";
-}
-
 <h2>Lista Proprietari</h2>
+
+<div class="mb-3">
+    <input type="text" id="searchInput" class="form-control" placeholder="Cerca per nome, cognome o codice fiscale..." />
+</div>
 @if (Model.Any())
 {
     <table class="table">
@@ -18,7 +18,8 @@
                 <th>Azioni</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="proprietariTableBody">
+
             @foreach (var proprietario in Model)
             {
                 <tr>
@@ -43,19 +44,37 @@
             }
         </tbody>
     </table>
-
-
-
+}
+else
+{
+    <div class="alert alert-warning">Ancora nessun Proprietario</div>
 }
 
 
 
 
 
-else
-{
-<div class="alert alert-warning">Ancora nessun Proprietario</div>
-<a asp-action="creazioneProprietario" class="btn btn-primary">Aggiungi Proprietario</a>
 
 
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var searchTerm = $(this).val().toLowerCase();
+
+                $.ajax({
+                    url: '@Url.Action("CercaProprietari")',
+                    type: 'GET',
+                    data: { query: searchTerm },
+                    success: function (data) {
+                        $('#proprietariTableBody').html(data);
+                    },
+                    error: function () {
+                        alert('Errore nella ricerca.');
+                    }
+                });
+            });
+        });
+    </script>
 }
