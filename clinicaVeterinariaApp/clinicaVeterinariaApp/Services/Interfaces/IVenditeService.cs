@@ -10,5 +10,6 @@ namespace clinicaVeterinariaApp.Services.Interfaces
         public Task CreateVendita(Vendita vendita);
         public Task DeleteVenditeCall(int venditaId);
         public Task ModificaVend(Vendita V);
+        public Task<IEnumerable<Vendita>> SearchBarVendite(string ricetta);
     }
 }

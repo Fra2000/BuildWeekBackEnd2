@@ -93,5 +93,19 @@ namespace clinicaVeterinariaApp.Controllers
             return RedirectToAction("AllMedicinali");
            
         }
+
+        public async Task<IActionResult> SearchBarMedicinali(string nome)
+        {
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                var RisultatoSerchbar = await _MedicineServ.Searchbar(nome);
+                return View("AllMedicinali", RisultatoSerchbar);
+            }
+            else
+            {
+                var tuttiMedicinalis = await _MedicineServ.TuttiMedicinali();
+                return View("AllMedicinali", tuttiMedicinalis);
+            }
+        }
     }
 }
