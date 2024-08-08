@@ -1,0 +1,57 @@
+﻿@model clinicaVeterinariaApp.Models.CreateprodottoViewModel
+
+@{
+    ViewData["Title"] = "Create Prodotto";
+}
+
+<h1>Create Prodotto</h1>
+
+<h4>Prodotto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FotoProdotto" class="control-label"></label>
+                <input type="file" name="FotoProdotto" class="form-control" />
+                <span asp-validation-for="FotoProdotto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElencoUsi" class="control-label"></label>
+                <input asp-for="ElencoUsi" class="form-control" />
+                <span asp-validation-for="ElencoUsi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrezzoUnitario" class="control-label"></label>
+                <input asp-for="PrezzoUnitario" class="form-control" />
+                <span asp-validation-for="PrezzoUnitario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FornitoreId" class="control-label">Fornitore</label>
+                <select asp-for="FornitoreId" asp-items="ViewBag.Fornitori" class="form-control">
+                    <option value="">-- Seleziona Fornitore --</option>
+                </select>
+                <span asp-validation-for="FornitoreId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"  />
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
