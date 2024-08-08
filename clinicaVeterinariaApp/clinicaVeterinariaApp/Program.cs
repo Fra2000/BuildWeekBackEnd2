@@ -83,6 +83,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "prodotto_index",
+    pattern: "Prodotto/Index",
+    defaults: new { controller = "Prodotto", action = "Index" }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 

@@ -2,8 +2,7 @@
 using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace clinicaVeterinariaApp.Services
 {

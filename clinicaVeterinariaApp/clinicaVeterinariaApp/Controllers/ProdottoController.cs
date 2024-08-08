@@ -93,7 +93,8 @@ namespace clinicaVeterinariaApp.Controllers
                     Fornitore = fornitore,
                 };
                 await _prodottoService.CreateProdotto(nuovoprodotto);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Prodotto");
+
 
             }
             // Ricarica la lista dei proprietari in caso di errore
@@ -103,7 +104,7 @@ namespace clinicaVeterinariaApp.Controllers
                 Value = f.FornitoreId.ToString(),
                 Text = $"{f.Nome} "
             }).ToList();
-            return View("Index", prodotto);
+            return View(prodotto);
         }
 
         // GET: Prodotto/Edit/5
