@@ -1,6 +1,6 @@
-﻿using System;
-using clinicaVeterinariaApp.Data;
+﻿using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Farmacia;
+using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +26,8 @@ namespace clinicaVeterinariaApp.Services
 
         //Elenco fornitori
         public async Task<IEnumerable<Fornitore>> elencoFornitoriAsync() => await _dbContext.Fornitori.ToListAsync();
+
+       
 
 
         //Eliminazione fornitori 

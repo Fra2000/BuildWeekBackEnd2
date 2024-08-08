@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using clinicaVeterinariaApp.Models.Farmacia;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace clinicaVeterinariaApp.Models.Farmacia
+namespace clinicaVeterinariaApp.Models
 {
-    public class Prodotto
+    public class CreateprodottoViewModel
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int ProdottoID { get; set; }
         [Required, MaxLength(50)]
         public string Nome { get; set; }
@@ -15,10 +16,6 @@ namespace clinicaVeterinariaApp.Models.Farmacia
         [Required]
         public decimal PrezzoUnitario { get; set; }
 
-        public Fornitore Fornitore { get; set; }
-
-        public ICollection<Vendita> Vendita { get; set; }
-        public ICollection<Medicinale> Medicinale { get; set; }
-
+        public int FornitoreId{ get; set; }
     }
 }

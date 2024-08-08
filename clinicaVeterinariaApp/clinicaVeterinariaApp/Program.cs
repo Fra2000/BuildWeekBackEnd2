@@ -31,6 +31,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/AccessDenied"; // Pagina di accesso negato
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("VeterinarioPolicy", policy =>
+        policy.RequireRole("Veterinario"));
+
+    options.AddPolicy("FarmacistaPolicy", policy =>
+        policy.RequireRole("Farmacista"));
+
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireRole("User"));
+});
+
 // Aggiungi i servizi di account
 builder.Services.AddScoped<IAccountService, AccountService>();
 // service ricoveri
@@ -69,6 +81,12 @@ app.UseRouting();
 // Configura l'autenticazione e l'autorizzazione
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "prodotto_index",
+    pattern: "Prodotto/Index",
+    defaults: new { controller = "Prodotto", action = "Index" }
+);
 
 app.MapControllerRoute(
     name: "default",

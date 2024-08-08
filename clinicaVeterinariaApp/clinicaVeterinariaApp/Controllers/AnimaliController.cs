@@ -4,10 +4,13 @@ using clinicaVeterinariaApp.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using clinicaVeterinariaApp.Services.Interfaces;
 using clinicaVeterinariaApp.Services;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "VeterinarioPolicy")] 
+    
     public class AnimaliController : Controller
     {
         private readonly IAnimaliService _animaliService;
@@ -147,6 +150,14 @@ namespace clinicaVeterinariaApp.Controllers
             return RedirectToAction(nameof(ElencoAnimali));
         }
 
+        public IActionResult CercaAnimali(string query)
+        {
+            var animali = _context.Animali
+                .Where(a => a.NomeAnimale.Contains(query) || (a.MicrochipNumber != null && a.MicrochipNumber.Contains(query)))
+                .ToList();
+
+            return PartialView("_AnimaliPartial", animali);
+        }
 
     }
 }

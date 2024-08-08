@@ -2,10 +2,12 @@
 using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "FarmacistaPolicy")]
     public class VenditeController : Controller
     {
         private readonly AppDbContext _context;

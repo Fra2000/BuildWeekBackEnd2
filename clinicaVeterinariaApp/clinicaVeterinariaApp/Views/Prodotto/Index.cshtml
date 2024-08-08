@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.PrezzoUnitario)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FotoProdotto)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Fornitore.Nome)
             </th>
             <th></th>
@@ -34,6 +37,16 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PrezzoUnitario)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.FotoProdotto))
+                    {
+                        <img src="@item.FotoProdotto" alt="Product Image" width="100" height="100" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Fornitore.Nome)
