@@ -5,6 +5,20 @@
 <div class="mb-3">
     <input type="text" id="searchInput" class="form-control" placeholder="Cerca per nome, cognome o codice fiscale..." />
 </div>
+
+
+
+<div class="mb-3">
+    <a asp-action="creazioneProprietario" class="btn btn-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <path d="M8 7V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1zm-1 1V8H1a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H7z" />
+        </svg>
+        Crea Nuovo Proprietario
+    </a>
+</div>
+
+
+
 @if (Model.Any())
 {
     <table class="table">
@@ -44,6 +58,7 @@
             }
         </tbody>
     </table>
+    
 }
 else
 {

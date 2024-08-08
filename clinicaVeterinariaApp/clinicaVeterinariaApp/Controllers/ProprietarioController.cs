@@ -42,7 +42,6 @@ namespace clinicaVeterinariaApp.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> creazioneProprietario(ProprietarioModel model)
