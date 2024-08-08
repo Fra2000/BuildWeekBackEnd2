@@ -1,0 +1,38 @@
+﻿@model clinicaVeterinariaApp.Models.Veterinario.ProprietarioModel
+
+@{
+    ViewData["Title"] = "Modifica Proprietario";
+}
+
+<h2>Modifica Proprietario</h2>
+
+<form asp-action="modificaProprietario" method="post">
+    <input type="hidden" asp-for="ProprietarioID" />
+    <div class="form-group">
+        @Html.AntiForgeryToken()
+
+        <label asp-for="Nome"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Cognome"></label>
+        <input asp-for="Cognome" class="form-control" />
+        <span asp-validation-for="Cognome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Codicefiscale"></label>
+        <input asp-for="Codicefiscale" class="form-control" />
+        <span asp-validation-for="Codicefiscale" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DataNascita"></label>
+        <input asp-for="DataNascita" class="form-control" type="date" />
+        <span asp-validation-for="DataNascita" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salva" class="btn btn-primary" />
+    </div>
+</form>
+
+<a asp-action="listaProprietari" class="btn btn-secondary">Annulla</a>

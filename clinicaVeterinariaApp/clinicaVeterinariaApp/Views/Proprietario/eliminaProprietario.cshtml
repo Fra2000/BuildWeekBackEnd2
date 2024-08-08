@@ -1,0 +1,17 @@
+﻿@model clinicaVeterinariaApp.Models.Veterinario.Proprietario
+
+@{
+    ViewData["Title"] = "Elimina Proprietario";
+}
+
+<h2>Elimina Proprietario</h2>
+
+<h3>Sei sicuro di voler eliminare il proprietario "@Model.Nome @Model.Cognome"?</h3>
+
+<form asp-action="eliminaCliente" method="post">
+    <input type="hidden" name="id" value="@Model.ProprietarioID" />
+    <div class="form-group">
+        <input type="submit" name="confirmation" value="yes" class="btn btn-danger" />
+        <a asp-action="listaProprietari" class="btn btn-secondary">Annulla</a>
+    </div>
+</form>
