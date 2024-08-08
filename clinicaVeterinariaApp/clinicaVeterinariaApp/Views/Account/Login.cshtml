@@ -2,8 +2,12 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
+<h2 class="text-center">Login</h2>
 
+<hr />
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
 <form asp-action="Login" method="post">
     <div class="form-group">
         <label for="email">Email</label>
@@ -13,8 +17,14 @@
         <label for="password">Password</label>
         <input type="password" name="password" class="form-control" id="password" required />
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+            <div class="input-group justify-content-center mt-2">
+                <button class="btn btn-outline-primary m-1">Accedi</button>
+                <p class="mt-2"><a asp-action="Register" class="m-2 ">Registra</a></p>
+            </div>
 </form>
+    </div>
+   <div class="col-2"></div>
+</div>
 
 @if (ViewBag.Error != null)
 {
@@ -22,3 +32,7 @@
         @ViewBag.Error
     </div>
 }
+
+
+
+

@@ -34,11 +34,11 @@ namespace clinicaVeterinariaApp.Services
         public async Task eliminazioneFornitoreAsync(int FornitoreId)
         {
             var fornitore = await _dbContext.Fornitori.SingleOrDefaultAsync(f => f.FornitoreId == FornitoreId);
-
-            _dbContext.Fornitori.Remove(fornitore);
-            await _dbContext.SaveChangesAsync();
-
-
+            if (fornitore != null)
+            {
+                _dbContext.Fornitori.Remove(fornitore);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
 

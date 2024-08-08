@@ -17,7 +17,9 @@ builder.Services
     .AddScoped<IClienteService, ClienteService>()
     .AddScoped<IFornitoreService, FornitoreService>()
     .AddScoped<IAnimaliService, AnimaliService>()
-    .AddScoped<IProprietarioService, ProprietarioService>();
+    .AddScoped<IProprietarioService, ProprietarioService>()
+    .AddScoped<IVenditeService, VenditeService>()
+    .AddScoped<IMedicinaleService, MedicinaleService>();
 
 
 // Configura l'autenticazione dei cookie

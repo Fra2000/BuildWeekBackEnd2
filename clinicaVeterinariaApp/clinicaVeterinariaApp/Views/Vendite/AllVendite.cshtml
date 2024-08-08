@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<clinicaVeterinariaApp.Models.Farmacia.Vendita>
 
-    <div class="container">
+    @* <div class="container">
         <div class="d-flex justify-content-between">
             <h2 class="me-3">Tutte le vendite:</h2>
             <form action="FormVendite" method="post">
@@ -12,31 +12,42 @@
                     </button>
                 </div>
             </form>
-        </div>
-@foreach (var i in Model) {
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">@i.Cliente.Nome</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">@i.Prodotto.Nome</h6>
-        <p class="card-text">Quantità: @i.Quantita</p>
-        <p class="card-text">@i.DataVendita</p>
-        <p class="card-text">@i.StatoVendita</p
-      </div>
-      <form action="EliminaVendite" method="post">
-          <input type="hidden" name="IdVendite" value="@i.VenditaID" />
-      <button class="btn btn-outline-dark">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-            </svg>
-        </button>
-        </form>
-         <form action="UpdateVendite" method="post">
-            <input type="hidden" name="VenditaID" value="@i.VenditaID" />
-            <button class="btn btn-outline-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                </svg>
-            </button>
-        </form>
-    </div>
-}
+        </div> *@
+        <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Codice Fiscale</th>
+                <th>Prodotto</th>
+                <th>Data di Vendita</th>
+                <th>Stato di vendita</th>
+                <th>Azioni effetuabili</th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach (var i in Model) 
+            {
+                <tr>
+                    <td>@i.VenditaID</td>
+                    <td>@i.Cliente.Nome</td>
+                    <td>@i.Cliente.CodiceFiscale</td>
+                    <td>@i.Prodotto.Nome</td>
+                    <td>@i.DataVendita</td>
+                    <td>@i.StatoVendita</td>
+                    <td>
+                        <a asp-action="UpdateVendite" asp-route-id="@i.VenditaID" class="btn btn-primary ms-4">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                            </svg>
+                        </a>
+                        <a asp-action="EliminaVendite" asp-route-id="@i.VenditaID" class="btn btn-danger me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                            </svg></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<a href="@Url.Action("FormVendite")" class="btn btn-outline-primary">Aggiungi Vendita</a>

@@ -4,6 +4,9 @@
 
 <h2>Register</h2>
 
+<hr />
+<div class="row">
+    <div class="col-md-4">
 <form asp-action="Register" method="post">
     <div class="form-group">
         <label for="nomeUser">Nome</label>
@@ -30,7 +33,10 @@
             }
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+            <div class="form-group my-3">
+                <input type="submit" value="Registarti" class="btn btn-outline-primary" />
+                <span><a asp-action="Login" class="m-3">Accedi</a></span>
+            </div>
 </form>
 
 @if (ViewBag.Error != null)
