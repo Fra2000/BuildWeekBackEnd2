@@ -1,10 +1,12 @@
 ﻿using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "FarmacistaPolicy")]
     public class MedicinaliController : Controller
     {
         private readonly AppDbContext _context;
@@ -92,6 +94,20 @@ namespace clinicaVeterinariaApp.Controllers
             await _MedicineServ.ModificaMed(medicinale);
             return RedirectToAction("AllMedicinali");
            
+        }
+
+        public async Task<IActionResult> SearchBarMedicinali(string nome)
+        {
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                var RisultatoSerchbar = await _MedicineServ.Searchbar(nome);
+                return View("AllMedicinali", RisultatoSerchbar);
+            }
+            else
+            {
+                var tuttiMedicinalis = await _MedicineServ.TuttiMedicinali();
+                return View("AllMedicinali", tuttiMedicinalis);
+            }
         }
     }
 }

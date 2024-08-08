@@ -77,5 +77,16 @@ namespace clinicaVeterinariaApp.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        //***********************************************
+        //FUNZIONE CERCA LE VENDITE PER RICETTA
+        public async Task<IEnumerable<Vendita>> SearchBarVendite(string ricetta)
+        {
+            return await _context
+                .Vendite.Include(m => m.Prodotto)
+                .Include(m => m.Cliente)
+                .Where(m => m.NumeroRicettaMedica.ToLower().StartsWith(ricetta.ToLower()))
+                .ToListAsync(); ;
+        }
     }
 }

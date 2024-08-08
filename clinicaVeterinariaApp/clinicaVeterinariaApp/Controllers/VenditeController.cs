@@ -1,10 +1,13 @@
 ﻿using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Farmacia;
+using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "FarmacistaPolicy")]
     public class VenditeController : Controller
     {
         private readonly AppDbContext _context;
@@ -70,5 +73,20 @@ namespace clinicaVeterinariaApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //*********************************************************
+        //SEARCBAR PER RICETTE
+        public async Task<IActionResult> SearchBarVendite(string ricetta)
+        {
+            if (!string.IsNullOrWhiteSpace(ricetta))
+            {
+                var RisultatoSerchbar = await _VenditeServ.SearchBarVendite(ricetta);
+                return View("AllVendite", RisultatoSerchbar);
+            }
+            else
+            {
+                var tuttiMedicinalis = await _VenditeServ.GetAllVendite();
+                return View("AllVendite", tuttiMedicinalis);
+            }
+        }
     }
 }

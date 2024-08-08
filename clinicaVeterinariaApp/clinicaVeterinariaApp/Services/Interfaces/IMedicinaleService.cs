@@ -10,5 +10,6 @@ namespace clinicaVeterinariaApp.Services.Interfaces
         public Task<IEnumerable<Medicinale>> TuttiMedicinali();
         public Task DeleteMedicinaleCall(int medicinaleId);
         public Task ModificaMed(Medicinale M);
+        public Task<IEnumerable<Medicinale>> Searchbar(string nome);
     }
 }
