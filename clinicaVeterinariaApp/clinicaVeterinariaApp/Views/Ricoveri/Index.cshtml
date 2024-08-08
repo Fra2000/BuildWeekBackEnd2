@@ -33,7 +33,16 @@
                 <td>@item.DataFineRicovero.ToShortDateString()</td>
                 <td>@item.Costo</td>
                 <td>@item.NomeAnimale</td>
-                <td>@item.MicrochipBit ? "Sì" : "No"</td>
+                <td>
+                    @if (item.MicrochipBit)
+                    {
+                        @item.MicrochipNumber
+                    }
+                    else
+                    {
+                        <span>Non ha il microchip</span>
+                    }
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.RicoveriID" class="btn btn-warning">Modifica</a> |
                     <a asp-action="Details" asp-route-id="@item.RicoveriID" class="btn btn-info">Dettagli</a> |

@@ -10,5 +10,6 @@
         public int AnimaleID { get; set; }
         public string NomeAnimale { get; set; }
         public bool MicrochipBit { get; set; }
+        public string MicrochipNumber { get; set; }
     }
 }
