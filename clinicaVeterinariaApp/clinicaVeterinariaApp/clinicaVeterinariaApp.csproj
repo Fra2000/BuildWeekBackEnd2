@@ -9,9 +9,6 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
-    <Content Remove="Views\Ricoveri\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
@@ -30,17 +27,5 @@
     <None Remove="Views\Cliente\" />
     <None Remove="Views\Fornitore\" />
     <None Remove="Views\Proprietario\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Ricoveri\Delete.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Ricoveri\Delete.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Ricoveri\Delete.cshtml" />
   </ItemGroup>
 </Project>

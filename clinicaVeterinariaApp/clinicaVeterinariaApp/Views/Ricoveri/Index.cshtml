@@ -44,9 +44,11 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.RicoveriID" class="btn btn-warning">Modifica</a> |
-                    <a asp-action="Details" asp-route-id="@item.RicoveriID" class="btn btn-info">Dettagli</a> |
-                    <a asp-action="Delete" asp-route-id="@item.RicoveriID" class="btn btn-danger">Elimina</a>
+                    <a asp-action="Edit" asp-route-id="@item.RicoveriID" class="btn btn-warning">Modifica</a>
+                     <form asp-action="DeleteConfirmed" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.RicoveriID" />
+                        <input type="submit" value="Elimina" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questo ricovero?');" />
+                    </form>
                 </td>
             </tr>
         }

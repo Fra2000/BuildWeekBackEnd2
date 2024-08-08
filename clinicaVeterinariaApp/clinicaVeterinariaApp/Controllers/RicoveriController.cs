@@ -105,8 +105,17 @@ namespace clinicaVeterinariaApp.Controllers
             return View(ricovero);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _ricoveriService.DeleteRicoveriAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
             if (ricovero == null)
@@ -122,22 +131,63 @@ namespace clinicaVeterinariaApp.Controllers
                 Datainizioricovero = ricovero.Datainizioricovero,
                 DataFineRicovero = ricovero.DataFineRicovero,
                 Costo = ricovero.Costo,
+                AnimaleID = ricovero.AnimaleID,
                 NomeAnimale = animale?.NomeAnimale,
                 MicrochipBit = animale?.MicrochipBit ?? false,
                 MicrochipNumber = animale?.MicrochipNumber
             };
 
-            return View(viewModel); // Non specificare il percorso, solo il nome della vista
+            var animali = await _animaliService.GetAllAnimaliAsync();
+            ViewBag.Animali = animali.Select(a => new SelectListItem
+            {
+                Value = a.AnimaleID.ToString(),
+                Text = a.NomeAnimale
+            }).ToList();
+
+            return View(viewModel);
         }
 
-
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Edit(int id, RicoveriViewModel viewModel)
         {
-            await _ricoveriService.DeleteRicoveriAsync(id);
-            return RedirectToAction(nameof(Index));
+            if (id != viewModel.RicoveriID)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
+                if (ricovero == null)
+                {
+                    return NotFound();
+                }
+
+                // Aggiorna solo i campi modificabili del modello Ricoveri
+                ricovero.Tipologia = viewModel.Tipologia;
+                ricovero.Datainizioricovero = viewModel.Datainizioricovero;
+                ricovero.DataFineRicovero = viewModel.DataFineRicovero;
+                ricovero.Costo = viewModel.Costo;
+
+                await _ricoveriService.UpdateRicoveriAsync(ricovero);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Se il ModelState non è valido, ricarica i dati necessari
+            var animali = await _animaliService.GetAllAnimaliAsync();
+            ViewBag.Animali = animali.Select(a => new SelectListItem
+            {
+                Value = a.AnimaleID.ToString(),
+                Text = a.NomeAnimale
+            }).ToList();
+
+            return View(viewModel);
         }
+
+
+
 
 
 

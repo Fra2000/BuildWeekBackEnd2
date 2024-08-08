@@ -1,0 +1,65 @@
+﻿@model clinicaVeterinariaApp.Models.Veterinario.RicoveriViewModel
+
+@{
+    ViewData["Title"] = "Modifica Ricovero";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Ricoveri</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="RicoveriID" />
+
+            <!-- Nome Animale (solo lettura) -->
+            <div class="form-group">
+                <label asp-for="NomeAnimale" class="control-label"></label>
+                <input asp-for="NomeAnimale" class="form-control" readonly />
+            </div>
+
+            <!-- Microchip Number (solo lettura) -->
+            <div class="form-group">
+                <label asp-for="MicrochipNumber" class="control-label"></label>
+                <input asp-for="MicrochipNumber" class="form-control" readonly />
+            </div>
+
+            <!-- Campi modificabili -->
+            <div class="form-group">
+                <label asp-for="Tipologia" class="control-label"></label>
+                <input asp-for="Tipologia" class="form-control" />
+                <span asp-validation-for="Tipologia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Datainizioricovero" class="control-label"></label>
+                <input asp-for="Datainizioricovero" class="form-control" type="date" />
+                <span asp-validation-for="Datainizioricovero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataFineRicovero" class="control-label"></label>
+                <input asp-for="DataFineRicovero" class="form-control" type="date" />
+                <span asp-validation-for="DataFineRicovero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costo" class="control-label"></label>
+                <input asp-for="Costo" class="form-control" />
+                <span asp-validation-for="Costo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Salva" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Torna all'elenco</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
