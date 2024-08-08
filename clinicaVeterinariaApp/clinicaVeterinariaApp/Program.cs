@@ -38,6 +38,9 @@ builder.Services.AddTransient<IMedicinaleService, MedicinaleService>();
 builder.Services.AddScoped<IVisiteService, VisiteService>();
 // servizio per le contabilizzazioni
 builder.Services.AddScoped<IContabilizzazioneRicoveriService, ContabilizzazioneRicoveriService>();
+// servizio per i prodotti
+builder.Services.AddScoped<IProdottoService, ProdottoService>();
+
 
 
 
