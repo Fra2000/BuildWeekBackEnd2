@@ -107,15 +107,23 @@ namespace clinicaVeterinariaApp.Controllers
             return View(prodotto);
         }
 
+
+       
         // GET: Prodotto/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var prodotto = await _prodottoService.GetProdottoById(id);
-
             if (prodotto == null)
             {
                 return NotFound();
             }
+
+            var fornitori = await _fornitoreService.elencoFornitoriAsync();
+            ViewBag.Fornitori = fornitori.Select(f => new SelectListItem
+            {
+                Value = f.FornitoreId.ToString(),
+                Text = f.Nome
+            }).ToList();
 
             return View(prodotto);
         }
@@ -123,48 +131,58 @@ namespace clinicaVeterinariaApp.Controllers
         // POST: Prodotto/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Prodotto prodotto, IFormFile imageFile)
+        public async Task<IActionResult> Edit( CreateprodottoViewModel prodotto, IFormFile FotoProdotto)
         {
-            if (id != prodotto.ProdottoID)
+
+
+           
+            if (FotoProdotto != null && FotoProdotto.Length > 0)
             {
-                return BadRequest();
-            }
+                Console.WriteLine("errore nella foto");
+                prodotto.FotoProdotto=await ConvertImageToBase64(FotoProdotto);
+                var fornitore = await _fornitoreService.getFornitoreByIdAsync(prodotto.FornitoreId);
+                Prodotto nuovoprodotto = new Prodotto
+                {
+                    ProdottoID = prodotto.ProdottoID,
+                    FotoProdotto = prodotto.FotoProdotto,
+                    Nome = prodotto.Nome,
+                    ElencoUsi = prodotto.ElencoUsi,
+                    PrezzoUnitario = prodotto.PrezzoUnitario,
+                    Fornitore = fornitore,
+                };
 
-            if (ModelState.IsValid)
+                await _prodottoService.UpdateProdotto(nuovoprodotto);
+                return RedirectToAction("Index", "Prodotto");
+
+            }
+            // Ricarica la lista dei proprietari in caso di errore
+            var product = await _prodottoService.GetAllProdotti();
+            ViewBag.Proprietari = product.Select(p => new SelectListItem
             {
-                if (imageFile != null)
-                {
-                    
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                   
-                   // non va
-                    prodotto.FotoProdotto = "/images/" + uniqueFileName;
-                }
+                Value = p.ProdottoID.ToString(),
+                Text = $"{p.Nome}"
+            }).ToList();
 
-                var updatedProdotto = await _prodottoService.UpdateProdotto(id, prodotto);
-
-                if (updatedProdotto == null)
-                {
-                    return NotFound();
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
             return View(prodotto);
+
+            
         }
 
+
+
+
         // GET: Prodotto/Delete/5
+       
         public async Task<IActionResult> Delete(int id)
         {
             var prodotto = await _prodottoService.GetProdottoById(id);
-
             if (prodotto == null)
             {
                 return NotFound();
             }
-
             return View(prodotto);
         }
+
 
         // POST: Prodotto/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -180,5 +198,6 @@ namespace clinicaVeterinariaApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

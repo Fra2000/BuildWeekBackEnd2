@@ -33,24 +33,14 @@ namespace clinicaVeterinariaApp.Services
             return prodotto;
         }
 
-        public async Task<Prodotto> UpdateProdotto(int id, Prodotto prodotto)
+        public async Task<Prodotto> UpdateProdotto(Prodotto prodotto)
         {
-            var existingProdotto = await _context.Prodotti.FindAsync(id);
-            if (existingProdotto == null)
-            {
-                return null;
-            }
+           
+           
 
-            existingProdotto.Nome = prodotto.Nome;
-            existingProdotto.FotoProdotto = prodotto.FotoProdotto;
-            existingProdotto.ElencoUsi = prodotto.ElencoUsi;
-            existingProdotto.PrezzoUnitario = prodotto.PrezzoUnitario;
-            existingProdotto.Fornitore = prodotto.Fornitore;
-
-            _context.Prodotti.Update(existingProdotto);
+            _context.Entry(prodotto).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
-            return existingProdotto;
+            return prodotto;
         }
 
         public async Task<bool> DeleteProdotto(int id)
@@ -63,8 +53,9 @@ namespace clinicaVeterinariaApp.Services
 
             _context.Prodotti.Remove(prodotto);
             await _context.SaveChangesAsync();
-
             return true;
         }
+
+        
     }
 }
