@@ -1,23 +1,46 @@
 ﻿@model IEnumerable<clinicaVeterinariaApp.Models.Farmacia.Medicinale>
 
 <div class="container">
-    <div class="d-flex justify-content-between">
+    <div>
         <h2 class="me-3">Tutte i Medicinali:</h2>
-        <form action="CreateMedicinale" method="post">
-            <div class="d-flex">
-                <button class="btn ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                    </svg>
-                </button>
-            </div>
-        </form>
     </div>
+     <div class="container mt-3">
+        <div class="d-flex">
+            <form action="SearchBarMedicinali" method="get" class="d-flex">
+                <div class="d-flex me-2">
+                    <!-- L'input occupa due terzi della riga -->
+                    <input class="form-control" name="nome" type="search" placeholder="Cerca" aria-label="Cerca">
+                </div>
+                <div>
+                    <!-- Bottone con icona di ricerca -->
+                    <button class="btn btn-outline-primary" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.81 1.065a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        
+            <div class="ms-auto">
+                <!-- Bottone Aggiungi posizionato a destra -->
+                <form asp-action="CreateMedicinale" method="post">
+                    <button class="btn btn-outline-primary">
+                        Aggiungi
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg mb-1" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+     </div>
+</div>
 
-    <div class="d-flex mt-3">
-@foreach (var medicinale in Model){
-    <div class="d-flex col-2 justify-content-around">
-        <div class="card">
+<div class="row mt-3">
+    @foreach (var medicinale in Model)
+    {
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
                 <img src="@medicinale.Prodotto.FotoProdotto" class="card-img-top" alt="Immagine Medicinale">
             <div class="card-body">
                 <h5 class="card-title">@medicinale.Prodotto.Nome</h5>
@@ -25,7 +48,7 @@
                 <p class="card-text">Armadio: @medicinale.Cassetto.Armadio.CodiceUnivoco</p>
                 <p class="card-text">Cassetto: @medicinale.Cassetto.NumeroCassetto</p>
             </div>
-            <div class="d-flex">
+                <div class="d-flex justify-content-between p-2">
                 <form action="EditMedicinale" method="post" class="m-2">
                     <input type="hidden" name="id" value="@medicinale.MedicinaleID" />
                     <button class="btn btn-outline-primary">

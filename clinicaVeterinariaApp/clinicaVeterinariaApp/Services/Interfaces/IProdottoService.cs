@@ -8,7 +8,7 @@ namespace clinicaVeterinariaApp.Services.Interfaces
         Task<IEnumerable<Prodotto>> GetAllProdotti();
         Task<Prodotto> GetProdottoById(int id);
         Task<Prodotto> CreateProdotto(Prodotto prodotto);
-        Task<Prodotto> UpdateProdotto(int id, Prodotto prodotto);
+        Task<Prodotto> UpdateProdotto(Prodotto prodotto);
         Task<bool> DeleteProdotto(int id);
     }
 }

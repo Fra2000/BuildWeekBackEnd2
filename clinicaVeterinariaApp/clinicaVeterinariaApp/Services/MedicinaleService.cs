@@ -74,13 +74,25 @@ namespace clinicaVeterinariaApp.Services
 
             if (medicinale != null)
             {
-                // Aggiorna le proprietà
                 medicinale.ProdottoID = M.ProdottoID;
                 medicinale.CassettoID = M.CassettoID;
 
-                // Salva le modifiche
                 await _context.SaveChangesAsync();
             }
+        }
+
+        //***********************************************
+        //FUNZIONE CERCA I MEDICINALI PER NOME
+        public async Task<IEnumerable<Medicinale>> Searchbar(string nome)
+        {
+            var medicinali = await _context.Medicinali
+                .Include(m => m.Prodotto)
+                .Include(m => m.Cassetto)
+                .ThenInclude(c => c.Armadio)
+                .Where(m => m.Prodotto.Nome.ToLower().StartsWith(nome.ToLower()))
+                .ToListAsync();
+
+            return medicinali;
         }
     }
 }
