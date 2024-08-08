@@ -1,9 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using clinicaVeterinariaApp.Models.Veterinario;
-using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using clinicaVeterinariaApp.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using clinicaVeterinariaApp.Data;
 
 namespace clinicaVeterinariaApp.Controllers
 {
@@ -11,10 +16,14 @@ namespace clinicaVeterinariaApp.Controllers
     public class RicoveriController : Controller
     {
         private readonly IRicoveriService _ricoveriService;
+        private readonly IAnimaliService _animaliService;
+        private readonly AppDbContext _context;
 
-        public RicoveriController(IRicoveriService ricoveriService)
+        public RicoveriController(IRicoveriService ricoveriService, IAnimaliService animaliService, AppDbContext appDbContext)
         {
             _ricoveriService = ricoveriService;
+            _animaliService = animaliService;
+            _context = appDbContext;
         }
 
         // Serve la view Index
@@ -22,70 +31,58 @@ namespace clinicaVeterinariaApp.Controllers
         public async Task<IActionResult> Index()
         {
             var ricoveri = await _ricoveriService.GetAllRicoveriAsync();
-            return View(ricoveri);  // Assicurati di avere una view "Index" sotto Views/Ricoveri
+            var animali = await _animaliService.GetAllAnimaliAsync();
+
+            var viewModel = ricoveri.Select(r => new RicoveriViewModel
+            {
+                RicoveriID = r.RicoveriID,
+                Tipologia = r.Tipologia,
+                Datainizioricovero = r.Datainizioricovero,
+                DataFineRicovero = r.DataFineRicovero,
+                Costo = r.Costo,
+                AnimaleID = r.AnimaleID,
+                NomeAnimale = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.NomeAnimale,
+                MicrochipBit = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipBit ?? false
+            }).ToList();
+
+            return View(viewModel);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Details(int id)
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
-            if (ricovero == null)
-                return NotFound();
-
-            return View(ricovero);
+            var animali = await _animaliService.GetAllAnimaliAsync();
+            ViewBag.Animali = animali.Select(a => new SelectListItem
+            {
+                Value = a.AnimaleID.ToString(),
+                Text = a.NomeAnimale
+            }).ToList();
+            return View();
         }
 
-        [HttpGet("Create")]
-        public IActionResult Create()
-        {
-            return View();  // Restituisce la view per creare un nuovo ricovero
-        }
-
-        [HttpPost("Create")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ricoveri ricovero)
         {
-            if (!ModelState.IsValid)
-                return View(ricovero);
+            if (ModelState.IsValid)
+            {
+                await _ricoveriService.CreateRicoveriAsync(ricovero);
+                return RedirectToAction(nameof(Index));
+            }
 
-            await _ricoveriService.CreateRicoveriAsync(ricovero);
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet("Edit/{id}")]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
-            if (ricovero == null)
-                return NotFound();
-
-            return View(ricovero);
-        }
-
-        [HttpPost("Edit/{id}")]
-        public async Task<IActionResult> Edit(int id, Ricoveri ricovero)
-        {
-            if (id != ricovero.RicoveriID || !ModelState.IsValid)
-                return View(ricovero);
-
-            await _ricoveriService.UpdateRicoveriAsync(ricovero);
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet("Delete/{id}")]
-        public async Task<IActionResult> DeleteConfirm(int id)
-        {
-            var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
-            if (ricovero == null)
-                return NotFound();
+            var animali = await _animaliService.GetAllAnimaliAsync();
+            ViewBag.Animali = animali.Select(a => new SelectListItem
+            {
+                Value = a.AnimaleID.ToString(),
+                Text = a.NomeAnimale
+            }).ToList();
 
             return View(ricovero);
         }
 
-        [HttpPost("Delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _ricoveriService.DeleteRicoveriAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
+
+
+
+
     }
 }

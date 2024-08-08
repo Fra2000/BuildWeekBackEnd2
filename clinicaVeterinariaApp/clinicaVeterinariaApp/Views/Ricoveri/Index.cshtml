@@ -1,4 +1,4 @@
-﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Ricoveri>
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.RicoveriViewModel>
 
 @{
     ViewData["Title"] = "Elenco Ricoveri";
@@ -7,8 +7,9 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Aggiungi Nuovo Ricovero</a>
+    <a asp-action="Create" class="btn btn-primary">Aggiungi Nuovo Ricovero</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,6 +18,8 @@
             <th>Data Inizio</th>
             <th>Data Fine</th>
             <th>Costo</th>
+            <th>Nome Animale</th>
+            <th>Microchip</th>
             <th>Azioni</th>
         </tr>
     </thead>
@@ -29,10 +32,12 @@
                 <td>@item.Datainizioricovero.ToShortDateString()</td>
                 <td>@item.DataFineRicovero.ToShortDateString()</td>
                 <td>@item.Costo</td>
+                <td>@item.NomeAnimale</td>
+                <td>@item.MicrochipBit ? "Sì" : "No"</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.RicoveriID">Modifica</a> |
-                    <a asp-action="Details" asp-route-id="@item.RicoveriID">Dettagli</a> |
-                    <a asp-action="Delete" asp-route-id="@item.RicoveriID">Elimina</a>
+                    <a asp-action="Edit" asp-route-id="@item.RicoveriID" class="btn btn-warning">Modifica</a> |
+                    <a asp-action="Details" asp-route-id="@item.RicoveriID" class="btn btn-info">Dettagli</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RicoveriID" class="btn btn-danger">Elimina</a>
                 </td>
             </tr>
         }
