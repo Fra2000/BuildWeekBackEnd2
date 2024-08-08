@@ -28,8 +28,4 @@
     <None Remove="Views\Fornitore\" />
     <None Remove="Views\Proprietario\" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Animali\" />
-  </ItemGroup>
 </Project>
