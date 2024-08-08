@@ -1,7 +1,9 @@
 using clinicaVeterinariaApp.Data;
+
+using clinicaVeterinariaApp.Services.Interfaces;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services;
-using clinicaVeterinariaApp.Services.Interfaces;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Configura il contesto del database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services
+    .AddScoped<IClienteService, ClienteService>()
+    .AddScoped<IFornitoreService, FornitoreService>()
+    .AddScoped<IAnimaliService, AnimaliService>()
+    .AddScoped<IProprietarioService, ProprietarioService>();
+
 
 // Configura l'autenticazione dei cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -26,6 +35,13 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRicoveriService, RicoveriService>();
 // Add services to the container.
 builder.Services.AddTransient<IMedicinaleService, MedicinaleService>();
+// servizio per le visite
+builder.Services.AddScoped<IVisiteService, VisiteService>();
+// servizio per le contabilizzazioni
+builder.Services.AddScoped<IContabilizzazioneRicoveriService, ContabilizzazioneRicoveriService>();
+
+
+
 builder.Services.AddTransient<IVenditeService, VenditeService>();
 
 // Aggiungi i servizi per i controllori e le viste

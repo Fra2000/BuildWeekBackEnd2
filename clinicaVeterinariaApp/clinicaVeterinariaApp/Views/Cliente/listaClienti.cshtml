@@ -1,0 +1,45 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Farmacia.Cliente>
+
+@{
+    ViewData["Title"] = "Lista Clienti";
+}
+
+<h2>@ViewData["Title"]</h2>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codice Fiscale</th>
+                <th>Nome</th>
+                <th>Indirizzo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.CodiceFiscale</td>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Indirizzo</td>
+                    <td>
+                        <a asp-action="modificaCliente" asp-route-id="@cliente.ClienteID">Modifica</a> |
+                        <a asp-action="eliminaCliente" asp-route-id="@cliente.ClienteID">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="creazioneCliente" class="btn btn-primary">Aggiungi Nuovo Cliente</a>
+
+}
+else
+{
+    <div class="alert alert-warning">Ancora nessun cliente</div>
+    <a asp-action="creazioneCliente" class="btn btn-primary">Aggiungi Nuovo Cliente</a>
+
+
+}
+

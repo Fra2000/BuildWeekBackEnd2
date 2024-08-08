@@ -1,0 +1,40 @@
+﻿@model clinicaVeterinariaApp.Models.Farmacia.Fornitore
+
+@{
+    ViewData["Title"] = "Elimina Fornitore";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Sei sicuro di voler eliminare questo fornitore?</h3>
+<div>
+    <h4>Fornitore</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Nome
+        </dd>
+        <dt class="col-sm-2">
+            Indirizzo
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Indirizzo
+        </dd>
+        <dt class="col-sm-2">
+            Recapito
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Recapito
+        </dd>
+    </dl>
+
+    <form asp-action="eliminaFornitore" method="post">
+        <input type="hidden" asp-for="FornitoreId" />
+        <input type="hidden" name="confirmation" value="Elimina" />
+        <input type="submit" value="Elimina" class="btn btn-danger" /> |
+        <a asp-action="listaFornitori" class="btn btn-secondary">Annulla</a>
+    </form>
+</div>

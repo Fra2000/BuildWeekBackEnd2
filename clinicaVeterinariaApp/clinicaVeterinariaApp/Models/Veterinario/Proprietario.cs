@@ -31,5 +31,7 @@ namespace clinicaVeterinariaApp.Models.Veterinario
         public Users User { get; set; }
 
         public ICollection<Animali> Animali { get; set; }
+
+      
     }
 }

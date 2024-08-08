@@ -1,0 +1,44 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Farmacia.Fornitore>
+
+@{
+    ViewData["Title"] = "Lista Fornitori";
+}
+
+<h2>@ViewData["Title"]</h2>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Indirizzo</th>
+                <th>Recapito</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fornitore in Model)
+            {
+                <tr>
+                    <td>@fornitore.Nome</td>
+                    <td>@fornitore.Indirizzo</td>
+                    <td>@fornitore.Recapito</td>
+                    <td>
+                        <a asp-action="modificaFornitore" asp-route-id="@fornitore.FornitoreId" class="btn btn-warning">Modifica</a>
+                        <a asp-action="eliminaFornitore" asp-route-id="@fornitore.FornitoreId" class="btn btn-danger">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="creazioneFornitore" class="btn btn-primary">Aggiungi Fornitore</a>
+}
+else
+{
+    <div class="alert alert-warning">Ancora nessun fornitore</div>
+    <a asp-action="creazioneFornitore" class="btn btn-primary">Aggiungi un nuovo Fornitore</a>
+
+
+}
+
