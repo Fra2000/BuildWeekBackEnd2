@@ -3,6 +3,7 @@ using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using clinicaVeterinariaApp.Services.Interfaces;
+using clinicaVeterinariaApp.Services;
 
 
 namespace clinicaVeterinariaApp.Controllers
@@ -77,7 +78,7 @@ namespace clinicaVeterinariaApp.Controllers
             }
 
             // Ricarica la lista dei proprietari in caso di errore
-            var proprietari = await _provaservice.GetAllProprietariAsync();
+            var proprietari = await _proprietarioService.GetAllProprietariAsync();
             ViewBag.Proprietari = proprietari.Select(p => new SelectListItem
             {
                 Value = p.ProprietarioID.ToString(),
@@ -96,7 +97,7 @@ namespace clinicaVeterinariaApp.Controllers
             }
 
             // Ricarica la lista dei proprietari
-            var proprietari = await _provaservice.GetAllProprietariAsync();
+            var proprietari = await _proprietarioService.GetAllProprietariAsync();
             ViewBag.Proprietari = proprietari.Select(p => new SelectListItem
             {
                 Value = p.ProprietarioID.ToString(),
@@ -119,7 +120,7 @@ namespace clinicaVeterinariaApp.Controllers
 
 
             // Ricarica la lista dei proprietari in caso di errore
-            var proprietari = await _provaservice.GetAllProprietariAsync();
+            var proprietari = await _proprietarioService.GetAllProprietariAsync();
             ViewBag.Proprietari = proprietari.Select(p => new SelectListItem
             {
                 Value = p.ProprietarioID.ToString(),
