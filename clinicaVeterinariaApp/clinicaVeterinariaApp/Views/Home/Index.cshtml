@@ -1,8 +1,31 @@
-﻿@{
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Animali>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Benvenuto</h1>
+    <p>Scopri di più su <a href="https://learn.microsoft.com/aspnet/core">come costruire app Web con ASP.NET Core</a>.</p>
+
+    <h1>Cerca il tuo animale con il numero Microchip</h1>
+    <form asp-controller="Home" asp-action="Search" method="get" class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" name="query" placeholder="Cerca per numero microchip o nome" />
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Cerca</button>
+    </form>
+
+    @if (ViewData["Animals"] != null)
+    {
+        <h2>Risultati della ricerca</h2>
+        <ul class="list-group">
+            @foreach (var animale in (IEnumerable<clinicaVeterinariaApp.Models.Veterinario.Animali>)ViewData["Animals"])
+            {
+                <li class="list-group-item">
+                    <p> Nome Animale: <strong> @animale.NomeAnimale</strong> Numero Microchip: <strong> @animale.MicrochipNumber</strong></p>
+                </li>
+            }
+        </ul>
+    }
 </div>

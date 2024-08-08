@@ -10,6 +10,7 @@ namespace clinicaVeterinariaApp.Services.Interfaces
         Task<Prodotto> CreateProdotto(Prodotto prodotto);
         Task<Prodotto> UpdateProdotto(Prodotto prodotto);
         Task<bool> DeleteProdotto(int id);
+        public Task<IEnumerable<Prodotto>> CercaProdotti(string nome);
     }
 }
 

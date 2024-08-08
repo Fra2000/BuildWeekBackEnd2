@@ -199,5 +199,20 @@ namespace clinicaVeterinariaApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //BARRA DI RICERCA
+        public async Task<IActionResult> SearchBarProdotti(string nome)
+        {
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                var RisultatoSerchbar = await _prodottoService.CercaProdotti(nome);
+                return View("Index", RisultatoSerchbar);
+            }
+            else
+            {
+                var tuttiMedicinalis = await _prodottoService.GetAllProdotti();
+                return View("Index", tuttiMedicinalis);
+            }
+        }
+
     }
 }
