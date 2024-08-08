@@ -77,6 +77,11 @@ namespace clinicaVeterinariaApp.Services.Interfaces
 
             return true;
         }
+
+        public async Task<IEnumerable<Proprietario>> GetAllProprietariAsync()
+        {
+            return await _dbContext.Proprietari.ToListAsync();
+        }
     }
 }
 

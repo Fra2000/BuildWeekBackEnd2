@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services
     .AddScoped<IClienteService, ClienteService>()
     .AddScoped<IFornitoreService, FornitoreService>()
+    .AddScoped<IAnimaliService, AnimaliService>()
     .AddScoped<IProprietarioService, ProprietarioService>();
 
 

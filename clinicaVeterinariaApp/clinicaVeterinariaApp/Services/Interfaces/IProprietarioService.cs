@@ -18,6 +18,8 @@ namespace clinicaVeterinariaApp.Services.Interfaces
 
         Task<string> GenerateUniqueTokenAsync();
 
+        Task<IEnumerable<Proprietario>> GetAllProprietariAsync();
+
     }
 }
 

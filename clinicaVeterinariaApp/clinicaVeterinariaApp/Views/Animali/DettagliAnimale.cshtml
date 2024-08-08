@@ -1,0 +1,30 @@
+﻿@model clinicaVeterinariaApp.Models.Veterinario.Animali
+
+<h2>Dettagli Animale</h2>
+
+<div>
+    <h4>@Model.NomeAnimale</h4>
+    <dl class="dl-horizontal">
+        <dt>Nome</dt>
+        <dd>@Model.NomeAnimale</dd>
+        <dt>Tipologia</dt>
+        <dd>@Model.Tipologia</dd>
+        <dt>Colore Mantello</dt>
+        <dd>@Model.ColoreMantello</dd>
+        <dt>Data Nascita</dt>
+        <dd>@Model.DataNascita?.ToShortDateString()</dd>
+        <dt>Microchip</dt>
+        <dd>@(Model.MicrochipBit ? "Sì" : "No")</dd>
+        <dt>Numero Microchip</dt>
+        <dd>@Model.MicrochipNumber</dd>
+        <dt>Data Registrazione</dt>
+        <dd>@Model.Dataregistrazione?.ToShortDateString()</dd>
+        @if (!string.IsNullOrEmpty(Model.FotoAnimale))
+        {
+            <dt>Foto</dt>
+            <dd><img src="data:image/jpeg;base64,@Model.FotoAnimale" alt="Foto Animale" style="width:200px; height:200px;" /></dd>
+        }
+    </dl>
+    <a href="@Url.Action("ModificaAnimale", new { id = Model.AnimaleID })" class="btn btn-primary">Modifica</a>
+    <a href="@Url.Action("ElencoAnimali")" class="btn btn-secondary">Indietro</a>
+</div>
