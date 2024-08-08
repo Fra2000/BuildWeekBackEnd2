@@ -56,6 +56,11 @@ namespace clinicaVeterinariaApp.Services
             return true;
         }
 
-        
+        public async Task<IEnumerable<Prodotto>> CercaProdotti(string nome)
+        {
+            return await _context.Prodotti.Include(p => p.Fornitore)
+                .Where(m => m.Nome.ToLower().StartsWith(nome.ToLower()))
+                .ToListAsync();
+        }
     }
 }
