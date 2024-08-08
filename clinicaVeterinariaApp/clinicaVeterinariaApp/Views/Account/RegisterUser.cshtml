@@ -6,6 +6,9 @@
 
 <h2>@ViewData["Title"]</h2>
 
+<hr />
+<div class="row">
+    <div class="col-md-4">
 <form asp-action="RegisterUser" method="post">
     <div class="form-group">
         <label asp-for="NomeUser" class="control-label"></label>
@@ -33,7 +36,7 @@
         <span asp-validation-for="PrenotazioneToken" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-outline-primary mt-3 ">Register</button>
     </div>
     @if (ViewBag.Error != null)
     {
