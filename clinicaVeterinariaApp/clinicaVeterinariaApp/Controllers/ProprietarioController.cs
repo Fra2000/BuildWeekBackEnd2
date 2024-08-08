@@ -3,11 +3,13 @@ using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace clinicaVeterinariaApp.Controllers
 {
-	public class ProprietarioController : Controller
+    [Authorize(Policy = "VeterinarioPolicy")]
+    public class ProprietarioController : Controller
     {
         private readonly ILogger<ProprietarioController> _logger;
 

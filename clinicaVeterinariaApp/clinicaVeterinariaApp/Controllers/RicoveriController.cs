@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "VeterinarioPolicy")]
     public class RicoveriController : Controller
     {
         private readonly IRicoveriService _ricoveriService;

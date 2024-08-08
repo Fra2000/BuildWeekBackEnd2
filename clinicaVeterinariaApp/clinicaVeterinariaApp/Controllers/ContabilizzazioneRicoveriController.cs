@@ -1,10 +1,12 @@
 ﻿using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "VeterinarioPolicy")]
     public class ContabilizzazioneRicoveriController : Controller
     {
         private readonly IContabilizzazioneRicoveriService _contabilizzazioneRicoveriService;

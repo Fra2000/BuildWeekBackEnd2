@@ -1,10 +1,12 @@
 ﻿using System;
 using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace clinicaVeterinariaApp.Controllers
 {
+    [Authorize(Policy = "FarmacistaPolicy")]
 	public class ClienteController : Controller
 	{
 		private readonly IClienteService _clienteService;
