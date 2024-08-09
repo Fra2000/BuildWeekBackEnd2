@@ -17,13 +17,14 @@ public class AccountController : Controller
         _accountService = accountService;
         _context = context;
     }
-
+    //Vista del Login
     [HttpGet]
     public IActionResult Login()
     {
         return View();
     }
 
+    //Effettua il login, recuperando nome, ruolo,e UserId
     [HttpPost]
     public async Task<IActionResult> Login(string email, string password)
     {
@@ -49,7 +50,7 @@ public class AccountController : Controller
         return View();
     }
 
-
+    //Vista della registrazione
     [HttpGet]
     public IActionResult Register()
     {
@@ -57,6 +58,7 @@ public class AccountController : Controller
         return View();
     }
 
+    // Effettua la registrazione di farmacista e Veterinario
     [HttpPost]
     public async Task<IActionResult> Register(string nomeUser, string cognomeUser, string email, string password, int ruoloID)
     {
@@ -78,7 +80,7 @@ public class AccountController : Controller
     {
         return View();
     }
-
+    //Effettua la registrazione dello user, con l'uso del token per assegnare userId a proprietarioId
     [HttpPost]
     public async Task<IActionResult> RegisterUser(string nomeUser, string cognomeUser, string email, string password, string prenotazioneToken)
     {
@@ -93,6 +95,8 @@ public class AccountController : Controller
             return View();
         }
     }
+
+    //Gestisce il Logout
 
     [HttpPost]
     public async Task<IActionResult> Logout()
