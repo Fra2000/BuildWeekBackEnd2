@@ -1,33 +1,44 @@
 ﻿@model clinicaVeterinariaApp.Models.Veterinario.ContabilizzazioneRicoveri
 
 @{
-    ViewData["Title"] = "Aggiungi Nuova Contabilizzazione";
+    ViewData["Title"] = "Crea Contabilizzazione";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Crea Contabilizzazione Ricoveri</h1>
 
-<form asp-action="Create" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="form-group">
-        <label asp-for="RicoveroID" class="control-label"></label>
-        <input asp-for="RicoveroID" class="form-control" />
-        <span asp-validation-for="RicoveroID" class="text-danger"></span>
+<h4>Contabilizzazione Ricoveri</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="RicoveroID" class="control-label">Ricovero</label>
+                <select asp-for="RicoveroID" class="form-control" asp-items="@(new SelectList(ViewBag.Ricoveri, "RicoveriID", "Tipologia"))"></select>
+                <span asp-validation-for="RicoveroID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataContabilizzazione" class="control-label"></label>
+                <input asp-for="DataContabilizzazione" class="form-control" type="date" />
+                <span asp-validation-for="DataContabilizzazione" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Importo" class="control-label"></label>
+                <input asp-for="Importo" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="Importo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crea" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="DataContabilizzazione" class="control-label"></label>
-        <input asp-for="DataContabilizzazione" class="form-control" type="date" />
-        <span asp-validation-for="DataContabilizzazione" class="text-danger"></span>
-    </div>
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Torna all'elenco</a>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Importo" class="control-label"></label>
-        <input asp-for="Importo" class="form-control" type="number" step="0.01" />
-        <span asp-validation-for="Importo" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Crea</button>
-</form>
-
-<a href="Index">Torna all'elenco delle contabilizzazioni</a>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

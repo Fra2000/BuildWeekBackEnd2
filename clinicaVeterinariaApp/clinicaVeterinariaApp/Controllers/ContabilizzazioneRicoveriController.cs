@@ -1,32 +1,34 @@
-﻿using clinicaVeterinariaApp.Models.Veterinario;
-using clinicaVeterinariaApp.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using clinicaVeterinariaApp.Services.Interfaces;
+using clinicaVeterinariaApp.Models.Veterinario;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using clinicaVeterinariaApp.Data;
 
 namespace clinicaVeterinariaApp.Controllers
 {
     [Authorize(Policy = "VeterinarioPolicy")]
     public class ContabilizzazioneRicoveriController : Controller
     {
-        private readonly IContabilizzazioneRicoveriService _contabilizzazioneRicoveriService;
+        private readonly IContabilizzazioneRicoveriService _contabilizzazioneService;
+        private readonly AppDbContext _appDbContext;
 
-        public ContabilizzazioneRicoveriController(IContabilizzazioneRicoveriService contabilizzazioneRicoveriService)
+        public ContabilizzazioneRicoveriController(IContabilizzazioneRicoveriService contabilizzazioneService, AppDbContext appDbContext)
         {
-            _contabilizzazioneRicoveriService = contabilizzazioneRicoveriService;
+            _contabilizzazioneService = contabilizzazioneService;
+            _appDbContext = appDbContext;
         }
 
-        // GET: ContabilizzazioneRicoveri
         public async Task<IActionResult> Index()
         {
-            var contabilizzazioni = await _contabilizzazioneRicoveriService.GetAllAsync();
+            var contabilizzazioni = await _contabilizzazioneService.GetAllContabilizzazioniAsync();
             return View(contabilizzazioni);
         }
 
-        // GET: ContabilizzazioneRicoveri/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var contabilizzazione = await _contabilizzazioneRicoveriService.GetByIdAsync(id);
+            var contabilizzazione = await _contabilizzazioneService.GetContabilizzazioneByIdAsync(id);
             if (contabilizzazione == null)
             {
                 return NotFound();
@@ -34,79 +36,69 @@ namespace clinicaVeterinariaApp.Controllers
             return View(contabilizzazione);
         }
 
-        // GET: ContabilizzazioneRicoveri/Create
         public IActionResult Create()
         {
+            ViewBag.Ricoveri = _appDbContext.Ricoveri.Where(r => r.Attivo).ToList();
             return View();
         }
 
-        // POST: ContabilizzazioneRicoveri/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RicoveroID,DataContabilizzazione,Importo")] ContabilizzazioneRicoveri contabilizzazione)
+        public async Task<IActionResult> Create(ContabilizzazioneRicoveri contabilizzazione)
         {
             if (ModelState.IsValid)
             {
-                await _contabilizzazioneRicoveriService.AddAsync(contabilizzazione);
+                await _contabilizzazioneService.CreateContabilizzazioneAsync(contabilizzazione);
+                return RedirectToAction(nameof(Index));
+            }
+            ViewBag.Ricoveri = _appDbContext.Ricoveri.Where(r => r.Attivo).ToList();
+            return View(contabilizzazione);
+        }
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var contabilizzazione = await _contabilizzazioneService.GetContabilizzazioneByIdAsync(id);
+            if (contabilizzazione == null)
+            {
+                return NotFound();
+            }
+            return View(contabilizzazione);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, ContabilizzazioneRicoveri contabilizzazione)
+        {
+            if (id != contabilizzazione.ContabilizzazioneID)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _contabilizzazioneService.UpdateContabilizzazioneAsync(contabilizzazione);
                 return RedirectToAction(nameof(Index));
             }
             return View(contabilizzazione);
         }
 
-        // GET: ContabilizzazioneRicoveri/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            var contabilizzazione = await _contabilizzazioneRicoveriService.GetByIdAsync(id);
-            if (contabilizzazione == null)
-            {
-                return NotFound();
-            }
-            return View(contabilizzazione);
-        }
-
-        // POST: ContabilizzazioneRicoveri/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContabilizzazioneID,RicoveroID,DataContabilizzazione,Importo")] ContabilizzazioneRicoveri contabilizzazione)
-        {
-            if (id != contabilizzazione.ContabilizzazioneID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _contabilizzazioneRicoveriService.UpdateAsync(contabilizzazione);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    // Log the error
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
-            }
-            return View(contabilizzazione);
-        }
-
-        // GET: ContabilizzazioneRicoveri/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var contabilizzazione = await _contabilizzazioneRicoveriService.GetByIdAsync(id);
+            var contabilizzazione = await _contabilizzazioneService.GetContabilizzazioneByIdAsync(id);
             if (contabilizzazione == null)
             {
                 return NotFound();
             }
+
             return View(contabilizzazione);
         }
 
-        // POST: ContabilizzazioneRicoveri/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _contabilizzazioneRicoveriService.DeleteAsync(id);
+            await _contabilizzazioneService.DeleteContabilizzazioneAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -6,11 +6,15 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crea Nuova Contabilizzazione</a>
+</p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>ID Contabilizzazione</th>
-            <th>ID Ricovero</th>
+            <th>ID</th>
+            <th>Ricovero ID</th>
             <th>Data Contabilizzazione</th>
             <th>Importo</th>
             <th>Azioni</th>
@@ -23,15 +27,13 @@
                 <td>@item.ContabilizzazioneID</td>
                 <td>@item.RicoveroID</td>
                 <td>@item.DataContabilizzazione.ToShortDateString()</td>
-                <td>@item.Importo.ToString("C")</td>
+                <td>@item.Importo</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.ContabilizzazioneID">Dettagli</a> |
-                    <a asp-action="Edit" asp-route-id="@item.ContabilizzazioneID">Modifica</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ContabilizzazioneID">Elimina</a>
+                    <a asp-action="Details" asp-route-id="@item.ContabilizzazioneID" class="btn btn-info">Dettagli</a>
+                    <a asp-action="Edit" asp-route-id="@item.ContabilizzazioneID" class="btn btn-warning">Modifica</a>
+                    <a asp-action="Delete" asp-route-id="@item.ContabilizzazioneID" class="btn btn-danger">Elimina</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-<a asp-action="Create">Aggiungi Nuova Contabilizzazione</a>

@@ -1,9 +1,9 @@
-﻿using clinicaVeterinariaApp.Data;
-using clinicaVeterinariaApp.Models.Veterinario;
-using clinicaVeterinariaApp.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using clinicaVeterinariaApp.Models.Veterinario;
+using clinicaVeterinariaApp.Data;
+using clinicaVeterinariaApp.Services.Interfaces;
 
 namespace clinicaVeterinariaApp.Services
 {
@@ -16,33 +16,38 @@ namespace clinicaVeterinariaApp.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<ContabilizzazioneRicoveri>> GetAllAsync()
-        {
-            return await _context.ContabilizzazioneRicoveri.Include(c => c.Ricoveri).ToListAsync();
-        }
-
-        public async Task<ContabilizzazioneRicoveri> GetByIdAsync(int id)
+        public async Task<IEnumerable<ContabilizzazioneRicoveri>> GetAllContabilizzazioniAsync()
         {
             return await _context.ContabilizzazioneRicoveri
-                                 .Include(c => c.Ricoveri)
-                                 .FirstOrDefaultAsync(c => c.ContabilizzazioneID == id);
+                .Include(cr => cr.Ricoveri)
+                .ThenInclude(r => r.Animali)
+                .ToListAsync();
         }
 
-        public async Task AddAsync(ContabilizzazioneRicoveri contabilizzazione)
+        public async Task<ContabilizzazioneRicoveri> GetContabilizzazioneByIdAsync(int contabilizzazioneId)
+        {
+            return await _context.ContabilizzazioneRicoveri
+                .Include(cr => cr.Ricoveri)
+                .ThenInclude(r => r.Animali)
+                .FirstOrDefaultAsync(cr => cr.ContabilizzazioneID == contabilizzazioneId);
+        }
+
+        public async Task<ContabilizzazioneRicoveri> CreateContabilizzazioneAsync(ContabilizzazioneRicoveri contabilizzazione)
         {
             _context.ContabilizzazioneRicoveri.Add(contabilizzazione);
             await _context.SaveChangesAsync();
+            return contabilizzazione;
         }
 
-        public async Task UpdateAsync(ContabilizzazioneRicoveri contabilizzazione)
+        public async Task UpdateContabilizzazioneAsync(ContabilizzazioneRicoveri contabilizzazione)
         {
             _context.Entry(contabilizzazione).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteContabilizzazioneAsync(int contabilizzazioneId)
         {
-            var contabilizzazione = await _context.ContabilizzazioneRicoveri.FindAsync(id);
+            var contabilizzazione = await _context.ContabilizzazioneRicoveri.FindAsync(contabilizzazioneId);
             if (contabilizzazione != null)
             {
                 _context.ContabilizzazioneRicoveri.Remove(contabilizzazione);
