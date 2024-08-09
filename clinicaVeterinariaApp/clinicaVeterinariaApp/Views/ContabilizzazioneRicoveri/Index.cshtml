@@ -1,38 +1,44 @@
-﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.ContabilizzazioneRicoveroViewModel>
+﻿@model IEnumerable<dynamic>
 
-<h1>Elenco Contabilizzazioni Ricoveri</h1>
+<h1>Elenco Contabilizzazioni per Mese</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Crea Nuova Contabilizzazione</a>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome Animale</th>
-            <th>Data Inizio Ricovero</th>
-            <th>Data Contabilizzazione</th>
-            <th>Importo</th>
-            <th>Azioni</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr id="row-@item.ContabilizzazioneID">
-                <td>@item.ContabilizzazioneID</td>
-                <td>@item.NomeAnimale</td>
-                <td>@item.Datainizioricovero.ToShortDateString()</td>
-                <td>@item.DataContabilizzazione.ToShortDateString()</td>
-                <td>@item.Importo</td>
-                <td>
-                    <button class="btn btn-danger delete-button" data-id="@item.ContabilizzazioneID">Elimina</button>
-                </td>
+@foreach (var group in Model)
+{
+    <h3>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@group.Month) @group.Year</h3>
+    <p><strong>Totale Importo per @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@group.Month) @group.Year: €@group.TotalImporto</strong></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome Animale</th>
+                <th>Data Inizio Ricovero</th>
+                <th>Data Contabilizzazione</th>
+                <th>Importo</th>
+                <th>Azioni</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in group.Contabilizzazioni)
+            {
+                <tr id="row-@item.ContabilizzazioneID">
+                    <td>@item.ContabilizzazioneID</td>
+                    <td>@item.NomeAnimale</td>
+                    <td>@item.Datainizioricovero.ToShortDateString()</td>
+                    <td>@item.DataContabilizzazione.ToShortDateString()</td>
+                    <td>@item.Importo</td>
+                    <td>
+                        <button class="btn btn-danger delete-button" data-id="@item.ContabilizzazioneID">Elimina</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @section Scripts {
     <script>

@@ -24,35 +24,37 @@ namespace clinicaVeterinariaApp.Controllers
         {
             var contabilizzazioni = await _contabilizzazioneService.GetAllContabilizzazioniAsync();
 
-            var result = contabilizzazioni
+            var groupedContabilizzazioni = contabilizzazioni
                 .Where(c => c.Ricoveri.Attivo)
-                .Select(c => new ContabilizzazioneRicoveroViewModel
+                .GroupBy(c => new { c.DataContabilizzazione.Year, c.DataContabilizzazione.Month })
+                .Select(g => new
                 {
-                    ContabilizzazioneID = c.ContabilizzazioneID,
-                    RicoveroID = c.RicoveroID,
-                    NomeAnimale = c.Ricoveri.Animali.NomeAnimale,
-                    Datainizioricovero = c.Ricoveri.Datainizioricovero,
-                    DataContabilizzazione = c.DataContabilizzazione,
-                    Importo = c.Ricoveri.Costo  // Recupera l'importo dal modello Ricoveri
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    TotalImporto = g.Sum(c => c.Ricoveri.Costo), 
+                    Contabilizzazioni = g.Select(c => new ContabilizzazioneRicoveroViewModel
+                    {
+                        ContabilizzazioneID = c.ContabilizzazioneID,
+                        RicoveroID = c.RicoveroID,
+                        NomeAnimale = c.Ricoveri.Animali.NomeAnimale,
+                        Datainizioricovero = c.Ricoveri.Datainizioricovero,
+                        DataContabilizzazione = c.DataContabilizzazione,
+                        Importo = c.Ricoveri.Costo
+                    }).ToList()
                 })
+                .OrderByDescending(g => g.Year)
+                .ThenByDescending(g => g.Month)
                 .ToList();
 
-            return View(result);
+            return View(groupedContabilizzazioni);
         }
 
 
 
 
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var contabilizzazione = await _contabilizzazioneService.GetContabilizzazioneByIdAsync(id);
-            if (contabilizzazione == null)
-            {
-                return NotFound();
-            }
-            return View(contabilizzazione);
-        }
+
+
 
         public IActionResult Create()
         {
