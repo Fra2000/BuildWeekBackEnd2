@@ -14,7 +14,7 @@ namespace clinicaVeterinariaApp.Controllers
     public class AnimaliController : Controller
     {
         private readonly IAnimaliService _animaliService;
-        private readonly AppDbContext _context; // Aggiungi il contesto per accedere direttamente al database
+        private readonly AppDbContext _context; 
         private readonly IProprietarioService _proprietarioService;
 
         public AnimaliController(IAnimaliService animaliService, AppDbContext context, IProprietarioService proprietarioService)
