@@ -43,7 +43,8 @@ namespace clinicaVeterinariaApp.Controllers
                 AnimaleID = r.AnimaleID,
                 NomeAnimale = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.NomeAnimale,
                 MicrochipBit = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipBit ?? false,
-                MicrochipNumber = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipNumber
+                MicrochipNumber = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipNumber,
+                Attivo = r.Attivo
             }).ToList();
 
             return View(viewModel);
@@ -134,7 +135,8 @@ namespace clinicaVeterinariaApp.Controllers
                 AnimaleID = ricovero.AnimaleID,
                 NomeAnimale = animale?.NomeAnimale,
                 MicrochipBit = animale?.MicrochipBit ?? false,
-                MicrochipNumber = animale?.MicrochipNumber
+                MicrochipNumber = animale?.MicrochipNumber,
+                Attivo = ricovero.Attivo
             };
 
             var animali = await _animaliService.GetAllAnimaliAsync();
@@ -169,6 +171,7 @@ namespace clinicaVeterinariaApp.Controllers
                 ricovero.Datainizioricovero = viewModel.Datainizioricovero;
                 ricovero.DataFineRicovero = viewModel.DataFineRicovero;
                 ricovero.Costo = viewModel.Costo;
+                ricovero.Attivo = viewModel.Attivo;
 
                 await _ricoveriService.UpdateRicoveriAsync(ricovero);
 

@@ -20,6 +20,7 @@
             <th>Costo</th>
             <th>Nome Animale</th>
             <th>Microchip</th>
+            <th>Ricoverato ?</th>
             <th>Azioni</th>
         </tr>
     </thead>
@@ -43,6 +44,7 @@
                         <span>Non ha il microchip</span>
                     }
                 </td>
+                <td>@(item.Attivo ? "Sì" : "No")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.RicoveriID" class="btn btn-warning">Modifica</a>
                      <form asp-action="DeleteConfirmed" method="post" style="display:inline;">

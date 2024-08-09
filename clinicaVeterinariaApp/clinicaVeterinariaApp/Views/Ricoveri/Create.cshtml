@@ -37,6 +37,16 @@
                 <span asp-validation-for="AnimaleID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Attivo" class="control-label">Ricoverato ?</label>
+                @Html.DropDownListFor(model => model.Attivo, new List<SelectListItem>
+                {
+                new SelectListItem { Text = "Sì", Value = "true" },
+                new SelectListItem { Text = "No", Value = "false" }
+                }, "Seleziona...", new { @class = "form-control" })
+                <span asp-validation-for="Attivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <div class="form-group">
                 <input type="submit" value="Crea" class="btn btn-primary" />
             </div>
         </form>
