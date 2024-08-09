@@ -1,0 +1,15 @@
+﻿@model clinicaVeterinariaApp.Models.UserViewModel.ProprietarioViewModel
+
+@{
+    ViewData["Title"] = "Dettagli Proprietario";
+}
+
+<h1>@Model.Nome @Model.Cognome</h1>
+
+<p>
+    <strong>Data di Nascita:</strong> @Model.DataNascita.ToString("d")<br />
+    <strong>Codice Fiscale:</strong> @Model.CodiceFiscale<br />
+    <strong>Token Prenotazione:</strong> @Model.PrenotazioneToken
+</p>
+
+<a href="@Url.Action("Animals", new { proprietarioId = Model.ProprietarioId })">Visualizza Animali</a>

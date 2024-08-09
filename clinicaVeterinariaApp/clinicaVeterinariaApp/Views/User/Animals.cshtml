@@ -1,0 +1,53 @@
+﻿@model IEnumerable<clinicaVeterinariaApp.Models.UserViewModel.AnimalViewModel>
+
+@{
+    ViewData["Title"] = "Animali del Proprietario";
+}
+
+<h1>Animali del Proprietario</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tipologia</th>
+            <th>Colore Mantello</th>
+            <th>Foto</th>
+            <th>Data di Nascita</th>
+            <th>Microchip</th>
+            <th>Dettagli</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var animal in Model)
+        {
+            <tr>
+                <td>@animal.NomeAnimale</td>
+                <td>@animal.Tipologia</td>
+                <td>@animal.ColoreMantello</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(animal.FotoAnimale))
+                    {
+                        <img src="data:image/jpeg;base64,@animal.FotoAnimale" alt="Foto dell'Animale" style="width: 100px; height: auto;" />
+                    }
+                </td>
+                <td>@animal.DataNascita?.ToString("d")</td>
+                <td>
+                    @if (animal.MicrochipBit)
+                    {
+                        @animal.MicrochipNumber
+                    }
+                    else
+                    {
+                        @("No");
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("AnimalDetails", new { animalId = animal.AnimalId })">Visualizza Dettagli</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Home")">Torna alla Home</a>

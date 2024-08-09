@@ -53,7 +53,7 @@
                 <td>
                     @if (!string.IsNullOrEmpty(item.FotoProdotto))
                     {
-                        <img src="@item.FotoProdotto" alt="Product Image" width="100" height="100" />
+                        <img src="data:image/jpeg;base64,@item.FotoProdotto" alt="Product Image" width="100" height="100" />
                     }
                     else
                     {

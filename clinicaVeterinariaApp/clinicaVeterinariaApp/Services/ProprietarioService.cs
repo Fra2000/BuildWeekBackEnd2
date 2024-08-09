@@ -1,5 +1,4 @@
-﻿using System;
-using clinicaVeterinariaApp.Data;
+﻿using clinicaVeterinariaApp.Data;
 using clinicaVeterinariaApp.Models.Veterinario;
 using Microsoft.EntityFrameworkCore;
 
