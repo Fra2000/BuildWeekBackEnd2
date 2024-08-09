@@ -4,12 +4,33 @@
     ViewData["Title"] = "Dettagli Proprietario";
 }
 
-<h1>@Model.Nome @Model.Cognome</h1>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h4 mb-0">@Model.Nome @Model.Cognome</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <strong>Data di Nascita:</strong> @Model.DataNascita.ToString("d")<br />
+                    <strong>Codice Fiscale:</strong> @Model.CodiceFiscale<br />
+                    <strong>Token Prenotazione:</strong> @Model.PrenotazioneToken
+                </p>
+                <a href="@Url.Action("Animals", new { proprietarioId = Model.ProprietarioId })" class="btn btn-primary">Visualizza Animali</a>
+            </div>
+        </div>
+    </div>
 
-<p>
-    <strong>Data di Nascita:</strong> @Model.DataNascita.ToString("d")<br />
-    <strong>Codice Fiscale:</strong> @Model.CodiceFiscale<br />
-    <strong>Token Prenotazione:</strong> @Model.PrenotazioneToken
-</p>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
 
-<a href="@Url.Action("Animals", new { proprietarioId = Model.ProprietarioId })">Visualizza Animali</a>

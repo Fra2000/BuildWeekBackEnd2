@@ -5,9 +5,22 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+<form asp-controller="Ricoveri" asp-action="CercaRicoveri" method="get" class="d-flex">
+    <div class="d-flex me-2">
+        <input class="form-control" name="query" type="search" placeholder="Cerca per nome animale o microchip" aria-label="Cerca">
+    </div>
+    <div>
+        <button class="btn btn-outline-primary" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.81 1.065a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z" />
+            </svg>
+        </button>
+    </div>
+</form>
+
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Aggiungi Nuovo Ricovero</a>
+    <a asp-action="Create" class="btn btn-primary mt-3">Aggiungi Nuovo Ricovero</a>
 </p>
 
 <table class="table">

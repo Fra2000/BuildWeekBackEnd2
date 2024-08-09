@@ -27,6 +27,7 @@ namespace clinicaVeterinariaApp.Controllers
             return View();
         }
 
+        //Barra di ricerca accessibile a tutti per cercare animali scoparsi tramite nome o numeroMicrochip
         public IActionResult Search(string query)
         {
             var risultati = _context.Animali

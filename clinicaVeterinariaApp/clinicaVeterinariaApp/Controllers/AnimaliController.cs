@@ -14,7 +14,7 @@ namespace clinicaVeterinariaApp.Controllers
     public class AnimaliController : Controller
     {
         private readonly IAnimaliService _animaliService;
-        private readonly AppDbContext _context; // Aggiungi il contesto per accedere direttamente al database
+        private readonly AppDbContext _context; 
         private readonly IProprietarioService _proprietarioService;
 
         public AnimaliController(IAnimaliService animaliService, AppDbContext context, IProprietarioService proprietarioService)
@@ -23,7 +23,7 @@ namespace clinicaVeterinariaApp.Controllers
             _context = context;
             _proprietarioService = proprietarioService;
         }
-
+        //Conversione del file dell'immagine in formato base64
         private async Task<string> ConvertImageToBase64(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -39,12 +39,13 @@ namespace clinicaVeterinariaApp.Controllers
             }
         }
 
+        //Vista dell'elenco animali 
         public async Task<IActionResult> ElencoAnimali()
         {
             var animali = await _animaliService.GetAllAnimaliAsync();
             return View(animali);
         }
-
+        //Vista per dettagli animale 
         public async Task<IActionResult> DettagliAnimale(int id)
         {
             var animale = await _animaliService.GetAnimaleByIdAsync(id);
@@ -59,16 +60,17 @@ namespace clinicaVeterinariaApp.Controllers
         {
             var proprietari = await _proprietarioService.GetAllProprietariAsync();
 
-            // Converti la lista di Proprietario in SelectListItem
+            // Converte la lista di Proprietario in SelectListItem
             ViewBag.Proprietari = proprietari.Select(p => new SelectListItem
             {
                 Value = p.ProprietarioID.ToString(),
-                Text = $"{p.Codicefiscale} " // Supponendo che tu voglia visualizzare Nome e Cognome
+                Text = $"{p.Codicefiscale} " 
             }).ToList();
 
             return View();
         }
 
+        //Gestione della creazione degli animali  
         [HttpPost]
         public async Task<IActionResult> CreazioneAnimale(Animali animale, IFormFile FotoAnimale)
         {
@@ -110,6 +112,7 @@ namespace clinicaVeterinariaApp.Controllers
             return View(animale);
         }
 
+        //Gesitone della modifica animale
         [HttpPost]
         public async Task<IActionResult> ModificaAnimale(Animali animale, IFormFile fotoAnimale)
         {
@@ -133,6 +136,7 @@ namespace clinicaVeterinariaApp.Controllers
             return View(animale);
         }
 
+        //Gestione Eiminazione animale 
         public async Task<IActionResult> EliminaAnimale(int id)
         {
             var animale = await _animaliService.GetAnimaleByIdAsync(id);
@@ -142,7 +146,7 @@ namespace clinicaVeterinariaApp.Controllers
             }
             return View(animale);
         }
-
+        //Gestisce la pagina di conferma eliminazione 
         [HttpPost, ActionName("EliminaAnimale")]
         public async Task<IActionResult> EliminaAnimaleConfirmed(int id)
         {
@@ -150,6 +154,8 @@ namespace clinicaVeterinariaApp.Controllers
             return RedirectToAction(nameof(ElencoAnimali));
         }
 
+
+        //Gestione della barra di ricerca all'interno della vista ElencoAnimali
         public async Task<IActionResult> CercaAnimali(string query)
         {
             if (!string.IsNullOrWhiteSpace(query)) 

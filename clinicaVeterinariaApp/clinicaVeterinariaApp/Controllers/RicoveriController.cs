@@ -189,12 +189,55 @@ namespace clinicaVeterinariaApp.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CercaRicoveri(string query)
+        {
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                var ricoveri = await _context.Ricoveri
+                    .Include(r => r.Animali)  
+                    .Where(r => r.Animali.NomeAnimale.Contains(query) ||
+                                r.Animali.MicrochipNumber.Contains(query))
+                    .ToListAsync();
 
+                return View("Index", ricoveri.Select(r => new RicoveriViewModel
+                {
+                    RicoveriID = r.RicoveriID,
+                    Tipologia = r.Tipologia,
+                    Datainizioricovero = r.Datainizioricovero,
+                    DataFineRicovero = r.DataFineRicovero,
+                    Costo = r.Costo,
+                    AnimaleID = r.AnimaleID,
+                    NomeAnimale = r.Animali.NomeAnimale,
+                    MicrochipBit = r.Animali.MicrochipBit,
+                    MicrochipNumber = r.Animali.MicrochipNumber,
+                    Attivo = r.Attivo
+                }).ToList());
+            }
+            else
+            {
+                // Se la query è vuota, restituisci tutti i ricoveri
+                var ricoveri = await _ricoveriService.GetAllRicoveriAsync();
+                var animali = await _animaliService.GetAllAnimaliAsync();
 
+                var viewModel = ricoveri.Select(r => new RicoveriViewModel
+                {
+                    RicoveriID = r.RicoveriID,
+                    Tipologia = r.Tipologia,
+                    Datainizioricovero = r.Datainizioricovero,
+                    DataFineRicovero = r.DataFineRicovero,
+                    Costo = r.Costo,
+                    AnimaleID = r.AnimaleID,
+                    NomeAnimale = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.NomeAnimale,
+                    MicrochipBit = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipBit ?? false,
+                    MicrochipNumber = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipNumber,
+                    Attivo = r.Attivo
+                }).ToList();
 
-
-
-
+                return View("Index", viewModel);
+            }
+        }
+    }
 
     }
-}
+
