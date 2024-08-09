@@ -13,6 +13,7 @@ namespace clinicaVeterinariaApp.Controllers
             _userService = userService;
         }
 
+        //Restituisce la vista con i dettagli del proprietario 
         public async Task<IActionResult> Details()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Recupera l'ID utente dal contesto dell'utente
@@ -35,7 +36,7 @@ namespace clinicaVeterinariaApp.Controllers
             }
         }
 
-
+        //Gestisce la visualizzazione degli animali legati al proprietarioId
         [HttpGet]
         public async Task<IActionResult> Animals()
         {
@@ -58,6 +59,7 @@ namespace clinicaVeterinariaApp.Controllers
             }
         }
 
+        //Gestisce la visualizzazione dei dettali animali compresi ricoveri,e visite 
         [HttpGet]
         public IActionResult AnimalDetails(int animalId)
         {
