@@ -23,8 +23,26 @@ namespace clinicaVeterinariaApp.Controllers
         public async Task<IActionResult> Index()
         {
             var contabilizzazioni = await _contabilizzazioneService.GetAllContabilizzazioniAsync();
-            return View(contabilizzazioni);
+
+            var result = contabilizzazioni
+                .Where(c => c.Ricoveri.Attivo)
+                .Select(c => new ContabilizzazioneRicoveroViewModel
+                {
+                    ContabilizzazioneID = c.ContabilizzazioneID,
+                    RicoveroID = c.RicoveroID,
+                    NomeAnimale = c.Ricoveri.Animali.NomeAnimale,
+                    Datainizioricovero = c.Ricoveri.Datainizioricovero,
+                    DataContabilizzazione = c.DataContabilizzazione,
+                    Importo = c.Ricoveri.Costo  // Recupera l'importo dal modello Ricoveri
+                })
+                .ToList();
+
+            return View(result);
         }
+
+
+
+
 
         public async Task<IActionResult> Details(int id)
         {
@@ -38,68 +56,123 @@ namespace clinicaVeterinariaApp.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Ricoveri = _appDbContext.Ricoveri.Where(r => r.Attivo).ToList();
-            return View();
+            var ricoveri = _appDbContext.Ricoveri
+                .Where(r => r.Attivo)
+                .Select(r => new ContabilizzazioneRicoveroViewModel
+                {
+                    RicoveroID = r.RicoveriID,
+                    NomeAnimale = r.Animali.NomeAnimale,
+                    Datainizioricovero = r.Datainizioricovero
+                })
+                .ToList();
+
+            var viewModel = new CreateContabilizzazioneRicoveroViewModel
+            {
+                RicoveriAttivi = ricoveri,
+                ContabilizzazioneRicovero = new ContabilizzazioneRicoveroViewModel()
+            };
+
+            return View(viewModel);
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ContabilizzazioneRicoveri contabilizzazione)
+        public async Task<IActionResult> Create(CreateContabilizzazioneRicoveroViewModel viewModel)
         {
+            ModelState.Remove("RicoveriAttivi");
+            ModelState.Remove("ContabilizzazioneRicovero.NomeAnimale");
+            // Log per vedere i dati passati dal form
+            Console.WriteLine($"RicoveroID: {viewModel.ContabilizzazioneRicovero.RicoveroID}");
+            Console.WriteLine($"DataContabilizzazione: {viewModel.ContabilizzazioneRicovero.DataContabilizzazione}");
+
             if (ModelState.IsValid)
             {
+                // Recupera il ricovero selezionato
+                var ricovero = await _appDbContext.Ricoveri
+                    .FirstOrDefaultAsync(r => r.RicoveriID == viewModel.ContabilizzazioneRicovero.RicoveroID);
+
+                if (ricovero == null)
+                {
+                    Console.WriteLine("Errore: Il ricovero selezionato non esiste.");
+                    ModelState.AddModelError("", "Il ricovero selezionato non esiste.");
+                    viewModel.RicoveriAttivi = _appDbContext.Ricoveri
+                        .Where(r => r.Attivo)
+                        .Select(r => new ContabilizzazioneRicoveroViewModel
+                        {
+                            RicoveroID = r.RicoveriID,
+                            NomeAnimale = r.Animali.NomeAnimale,
+                            Datainizioricovero = r.Datainizioricovero
+                        })
+                        .ToList();
+
+                    return View(viewModel);
+                }
+
+                // Log dell'importo recuperato
+                Console.WriteLine($"Importo: {ricovero.Costo}");
+
+                var contabilizzazione = new ContabilizzazioneRicoveri
+                {
+                    RicoveroID = viewModel.ContabilizzazioneRicovero.RicoveroID,
+                    DataContabilizzazione = viewModel.ContabilizzazioneRicovero.DataContabilizzazione,
+                    Importo = ricovero.Costo  // Recupera l'importo dal modello Ricoveri
+                };
+
                 await _contabilizzazioneService.CreateContabilizzazioneAsync(contabilizzazione);
+                Console.WriteLine("Contabilizzazione creata con successo.");
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Ricoveri = _appDbContext.Ricoveri.Where(r => r.Attivo).ToList();
-            return View(contabilizzazione);
-        }
 
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            var contabilizzazione = await _contabilizzazioneService.GetContabilizzazioneByIdAsync(id);
-            if (contabilizzazione == null)
+            // Log degli errori del ModelState
+            Console.WriteLine("Errore: ModelState non valido.");
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
             {
-                return NotFound();
+                Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
             }
-            return View(contabilizzazione);
+
+            // Ripopola la lista dei ricoveri attivi in caso di errore
+            viewModel.RicoveriAttivi = _appDbContext.Ricoveri
+                .Where(r => r.Attivo)
+                .Select(r => new ContabilizzazioneRicoveroViewModel
+                {
+                    RicoveroID = r.RicoveriID,
+                    NomeAnimale = r.Animali.NomeAnimale,
+                    Datainizioricovero = r.Datainizioricovero
+                })
+                .ToList();
+
+            return View(viewModel);
         }
+
+
+
+
+
+
+
+
+       
+
+        
+
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ContabilizzazioneRicoveri contabilizzazione)
-        {
-            if (id != contabilizzazione.ContabilizzazioneID)
-            {
-                return BadRequest();
-            }
-
-            if (ModelState.IsValid)
-            {
-                await _contabilizzazioneService.UpdateContabilizzazioneAsync(contabilizzazione);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(contabilizzazione);
-        }
-
-        public async Task<IActionResult> Delete(int id)
-        {
-            var contabilizzazione = await _contabilizzazioneService.GetContabilizzazioneByIdAsync(id);
-            if (contabilizzazione == null)
-            {
-                return NotFound();
-            }
-
-            return View(contabilizzazione);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _contabilizzazioneService.DeleteContabilizzazioneAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _contabilizzazioneService.DeleteContabilizzazioneAsync(id);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine(ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
         }
+
     }
 }

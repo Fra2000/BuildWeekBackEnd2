@@ -1,8 +1,4 @@
-﻿@model clinicaVeterinariaApp.Models.Veterinario.ContabilizzazioneRicoveri
-
-@{
-    ViewData["Title"] = "Crea Contabilizzazione";
-}
+﻿@model clinicaVeterinariaApp.Models.Veterinario.CreateContabilizzazioneRicoveroViewModel
 
 <h1>Crea Contabilizzazione Ricoveri</h1>
 
@@ -12,20 +8,21 @@
     <div class="col-md-4">
         <form asp-action="Create" method="post">
             <div class="form-group">
-                <label asp-for="RicoveroID" class="control-label">Ricovero</label>
-                <select asp-for="RicoveroID" class="form-control" asp-items="@(new SelectList(ViewBag.Ricoveri, "RicoveriID", "Tipologia"))"></select>
-                <span asp-validation-for="RicoveroID" class="text-danger"></span>
+                <label asp-for="ContabilizzazioneRicovero.RicoveroID" class="control-label">Ricovero</label>
+                <select asp-for="ContabilizzazioneRicovero.RicoveroID" class="form-control">
+                    @foreach (var ricovero in Model.RicoveriAttivi)
+                    {
+                        <option value="@ricovero.RicoveroID">@ricovero.NomeAnimale - @ricovero.Datainizioricovero.ToShortDateString()</option>
+                    }
+                </select>
+                <span asp-validation-for="ContabilizzazioneRicovero.RicoveroID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataContabilizzazione" class="control-label"></label>
-                <input asp-for="DataContabilizzazione" class="form-control" type="date" />
-                <span asp-validation-for="DataContabilizzazione" class="text-danger"></span>
+                <label asp-for="ContabilizzazioneRicovero.DataContabilizzazione" class="control-label"></label>
+                <input asp-for="ContabilizzazioneRicovero.DataContabilizzazione" class="form-control" type="date" />
+                <span asp-validation-for="ContabilizzazioneRicovero.DataContabilizzazione" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Importo" class="control-label"></label>
-                <input asp-for="Importo" class="form-control" type="number" step="0.01" />
-                <span asp-validation-for="Importo" class="text-danger"></span>
-            </div>
+            <!-- Campo Importo rimosso dalla vista, verrà calcolato automaticamente -->
             <div class="form-group">
                 <input type="submit" value="Crea" class="btn btn-primary" />
             </div>
@@ -36,9 +33,3 @@
 <div>
     <a asp-action="Index" class="btn btn-secondary">Torna all'elenco</a>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
