@@ -195,7 +195,7 @@ namespace clinicaVeterinariaApp.Controllers
             if (!string.IsNullOrWhiteSpace(query))
             {
                 var ricoveri = await _context.Ricoveri
-                    .Include(r => r.Animali)  // Assumendo che tu abbia una navigazione alle informazioni dell'animale
+                    .Include(r => r.Animali)  
                     .Where(r => r.Animali.NomeAnimale.Contains(query) ||
                                 r.Animali.MicrochipNumber.Contains(query))
                     .ToListAsync();
