@@ -31,10 +31,11 @@ public class AccountController : Controller
         if (user != null)
         {
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Role, user.Ruoli.NomeRuolo)
-            };
+        {
+            new Claim(ClaimTypes.Name, user.Email),
+            new Claim(ClaimTypes.Role, user.Ruoli.NomeRuolo),
+            new Claim(ClaimTypes.NameIdentifier, user.UsersID.ToString()) // Usa UsersID
+        };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -47,6 +48,7 @@ public class AccountController : Controller
         ViewBag.Error = "Invalid login attempt.";
         return View();
     }
+
 
     [HttpGet]
     public IActionResult Register()

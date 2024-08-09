@@ -1,0 +1,62 @@
+﻿@model clinicaVeterinariaApp.Models.UserViewModel.AnimalViewModel
+
+@{
+    ViewData["Title"] = "Dettagli Animale";
+}
+
+<h1>@Model.NomeAnimale</h1>
+
+<p>
+    <strong>Tipologia:</strong> @Model.Tipologia<br />
+    <strong>Colore Mantello:</strong> @Model.ColoreMantello<br />
+    <strong>Data di Nascita:</strong> @Model.DataNascita?.ToString("d")<br />
+    <strong>Microchip:</strong> @(Model.MicrochipBit ? Model.MicrochipNumber : "No")<br />
+</p>
+
+<h2>Visite</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data Visita</th>
+            <th>Esame Obiettivo</th>
+            <th>Descrizione Cura</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var visita in Model.Visite)
+        {
+            <tr>
+                <td>@visita.DataVisita.ToString("d")</td>
+                <td>@visita.EsameObiettivo</td>
+                <td>@visita.DescrizioneCura</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Ricoveri</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tipologia</th>
+            <th>Data Inizio Ricovero</th>
+            <th>Data Fine Ricovero</th>
+            <th>Costo</th>
+            <th>Attivo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ricovero in Model.Ricoveri)
+        {
+            <tr>
+                <td>@ricovero.Tipologia</td>
+                <td>@ricovero.DataInizioRicovero.ToString("d")</td>
+                <td>@ricovero.DataFineRicovero.ToString("d")</td>
+                <td>@ricovero.Costo.ToString("C")</td>
+                <td>@(ricovero.Attivo ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Animals", new { proprietarioId = Model.AnimalId })">Torna agli Animali</a>

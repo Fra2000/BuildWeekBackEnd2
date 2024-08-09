@@ -54,7 +54,12 @@
                             }
                             @if (User.IsInRole("User"))
                             {
-
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Animals">I miei Animali</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Details">I miei Dati</a>
+                                </li>
                             }
                             <li class="nav-item">
                                 <form asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
