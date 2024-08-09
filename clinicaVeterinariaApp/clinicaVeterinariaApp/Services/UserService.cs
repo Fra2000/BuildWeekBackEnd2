@@ -32,7 +32,7 @@ namespace clinicaVeterinariaApp.Services
 
             if (proprietario == null)
             {
-                // Log or print the userId and error
+                
                 Console.WriteLine($"Proprietario with UserID {userId} not found.");
                 throw new KeyNotFoundException("Proprietario not found");
             }
@@ -75,7 +75,7 @@ namespace clinicaVeterinariaApp.Services
                         DataVisita = v.DataVisita,
                         EsameObiettivo = v.EsameObiettivo,
                         DescrizioneCura = v.DescrizioneCura
-                    }).ToList(), // Assicurati che siano convertiti in lista
+                    }).ToList(), 
                     Ricoveri = a.Ricoveri.Select(r => new HospitalizationViewModel
                     {
                         HospitalizationId = r.RicoveriID,
@@ -84,7 +84,7 @@ namespace clinicaVeterinariaApp.Services
                         DataFineRicovero = r.DataFineRicovero,
                         Costo = r.Costo,
                         Attivo = r.Attivo
-                    }).ToList() // Assicurati che siano convertiti in lista
+                    }).ToList() 
                 })
                 .ToList();
 
