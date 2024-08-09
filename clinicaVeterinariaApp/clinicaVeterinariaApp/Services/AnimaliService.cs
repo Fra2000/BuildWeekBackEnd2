@@ -13,6 +13,7 @@ namespace clinicaVeterinariaApp.Services
             _context = context;
         }
 
+        //Restituzione di tutti gli animali 
         public async Task<IEnumerable<Animali>> GetAllAnimaliAsync()
         {
             return await _context.Animali.ToListAsync();
@@ -23,6 +24,7 @@ namespace clinicaVeterinariaApp.Services
             return await _context.Animali.FindAsync(id);
         }
 
+        //Gestione creazione e salvataggio nuovo animale 
         public async Task CreateAnimaleAsync(Animali animale)
         {
             // Imposta Dataregistrazione alla data corrente se non è già impostata
@@ -35,6 +37,7 @@ namespace clinicaVeterinariaApp.Services
             await _context.SaveChangesAsync();
         }
 
+        //Gestione delle modifiche 
         public async Task UpdateAnimaleAsync(Animali animale)
         {
             // Imposta Dataregistrazione alla data corrente se non è già impostata
@@ -46,7 +49,7 @@ namespace clinicaVeterinariaApp.Services
             _context.Entry(animale).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-
+        //Gestione eliminazion
         public async Task DeleteAnimaleAsync(int id)
         {
             var animale = await _context.Animali.FindAsync(id);

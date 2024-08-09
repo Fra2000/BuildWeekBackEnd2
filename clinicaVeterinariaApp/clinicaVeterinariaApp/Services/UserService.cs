@@ -15,6 +15,7 @@ namespace clinicaVeterinariaApp.Services
             _context = context;
         }
 
+        //Recupero dei proprietari tramite l'Id 
         public ProprietarioViewModel GetProprietarioById(int userId)
         {
             var proprietario = _context.Proprietari
@@ -39,6 +40,8 @@ namespace clinicaVeterinariaApp.Services
 
             return proprietario;
         }
+
+        //Recupero dei proprietari tramite userId
         public async Task<Proprietario> GetProprietarioByUserIdAsync(int userId)
         {
             var proprietario = await _context.Proprietari
@@ -53,7 +56,7 @@ namespace clinicaVeterinariaApp.Services
             return proprietario;
         }
 
-
+        //Recupero Gli animali associati ai proprietari tramite proprietarioId 
         public IEnumerable<AnimalViewModel> GetAnimalsByProprietarioId(int proprietarioId)
         {
             var animals = _context.Animali
@@ -69,13 +72,15 @@ namespace clinicaVeterinariaApp.Services
                     MicrochipBit = a.MicrochipBit,
                     MicrochipNumber = a.MicrochipNumber,
                     DataRegistrazione = a.Dataregistrazione,
+                    //recupero delle visite associate all'animale 
                     Visite = a.Visite.Select(v => new VisitViewModel
                     {
                         VisitId = v.VisitaID,
                         DataVisita = v.DataVisita,
                         EsameObiettivo = v.EsameObiettivo,
                         DescrizioneCura = v.DescrizioneCura
-                    }).ToList(), 
+                    }).ToList(),
+                    //recupero dei ricoveri associati agli animali 
                     Ricoveri = a.Ricoveri.Select(r => new HospitalizationViewModel
                     {
                         HospitalizationId = r.RicoveriID,
@@ -92,7 +97,7 @@ namespace clinicaVeterinariaApp.Services
         }
 
 
-
+        //Recupero Animali dall'Id
         public AnimalViewModel GetAnimalById(int animalId)
         {
             var animal = _context.Animali

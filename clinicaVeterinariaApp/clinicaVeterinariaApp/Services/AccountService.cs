@@ -13,6 +13,7 @@ public class AccountService : IAccountService
         _context = context;
     }
 
+    //Gestione Autenticazione 
     public async Task<Users> AuthenticateAsync(string email, string password)
     {
         var user = await _context.Users.Include(u => u.Ruoli)
@@ -26,6 +27,7 @@ public class AccountService : IAccountService
         return null;
     }
 
+    //Gestione Registrazione 
     public async Task RegisterAsync(string nomeUser, string cognomeUser, string email, string password, int ruoloID)
     {
         var hashedPassword = HashPassword(password);
@@ -43,6 +45,7 @@ public class AccountService : IAccountService
         await _context.SaveChangesAsync();
     }
 
+    //Gestione registrazione User con token univoco per associazione user e proprietario
     public async Task RegisterUserAsync(string nomeUser, string cognomeUser, string email, string password, string prenotazioneToken)
     {
         // Verifica il token
@@ -62,7 +65,7 @@ public class AccountService : IAccountService
             CognomeUser = cognomeUser,
             Email = email,
             PasswordHash = hashedPassword,
-            RuoloID = 3 // Assumiamo che l'ID 3 sia per gli utenti
+            RuoloID = 3 // ID 3 è l'id del ruolo User
         };
 
         _context.Users.Add(user);
