@@ -37,6 +37,7 @@
                 <th>Cognome</th>
                 <th>Codice Fiscale</th>
                 <th>Data di Nascita</th>
+                <th>token</th>
                 <th>Azioni</th>
             </tr>
         </thead>
@@ -49,6 +50,7 @@
                     <td>@proprietario.Cognome</td>
                     <td>@proprietario.Codicefiscale</td>
                     <td>@proprietario.DataNascita.ToShortDateString()</td>
+                    <td>@proprietario.PrenotazioneToken</td>
                     <td>
                         <a asp-action="modificaProprietario" asp-route-id="@proprietario.ProprietarioID" class="btn btn-primary ms-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
