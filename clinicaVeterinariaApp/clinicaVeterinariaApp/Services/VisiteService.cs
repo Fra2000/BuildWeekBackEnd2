@@ -1,4 +1,5 @@
 ﻿using clinicaVeterinariaApp.Data;
+using clinicaVeterinariaApp.Models.Farmacia;
 using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,25 @@ namespace clinicaVeterinariaApp.Services
             {
                 _context.Visite.Remove(visite);
                 await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task ModificaVisite(Visite visita)
+        {
+            var existingVisita = await _context.Visite.FindAsync(visita.VisitaID);
+            if (existingVisita != null)
+            {
+                existingVisita.AnimaleID = visita.AnimaleID;
+                existingVisita.DataVisita = visita.DataVisita;
+                existingVisita.EsameObiettivo = visita.EsameObiettivo;
+                existingVisita.DescrizioneCura = visita.DescrizioneCura;
+
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Gestisci il caso in cui la visita non esiste
+                throw new Exception("Visita non trovata.");
             }
         }
     }

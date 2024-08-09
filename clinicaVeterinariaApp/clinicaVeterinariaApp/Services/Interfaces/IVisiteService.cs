@@ -11,5 +11,6 @@ namespace clinicaVeterinariaApp.Services.Interfaces
         Task AddAsync(Visite visite);
         Task UpdateAsync(Visite visite);
         Task DeleteAsync(int id);
+        public Task ModificaVisite(Visite visita);
     }
 }

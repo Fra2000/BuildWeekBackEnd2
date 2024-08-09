@@ -1,0 +1,40 @@
+﻿@model clinicaVeterinariaApp.Models.Veterinario.Visite
+
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="EditSalva" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="AnimaleID" class="control-label"></label>
+        <select asp-for="AnimaleID" class="form-control">
+            <option value="" disabled>Seleziona un'opzione...</option>
+            @foreach (var animali in ViewBag.tuttianimali)
+            {
+                <option value="@animali.AnimaleID">
+                    @animali.NomeAnimale
+                </option>
+            }
+        </select>
+        <span asp-validation-for="AnimaleID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DataVisita" class="control-label"></label>
+        <input asp-for="DataVisita" class="form-control" type="date" />
+        <span asp-validation-for="DataVisita" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EsameObiettivo" class="control-label"></label>
+        <textarea asp-for="EsameObiettivo" class="form-control"></textarea>
+        <span asp-validation-for="EsameObiettivo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DescrizioneCura" class="control-label"></label>
+        <textarea asp-for="DescrizioneCura" class="form-control"></textarea>
+        <span asp-validation-for="DescrizioneCura" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="VisitaID" />
+    <button type="submit" class="btn btn-outline-primary">Salva Modifiche</button>
+</form>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Annulla</a>

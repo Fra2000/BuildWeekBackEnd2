@@ -1,9 +1,10 @@
-﻿using clinicaVeterinariaApp.Models.Veterinario;
+﻿using System.Threading.Tasks;
+using clinicaVeterinariaApp.Models.Farmacia;
+using clinicaVeterinariaApp.Models.Veterinario;
 using clinicaVeterinariaApp.Services;
 using clinicaVeterinariaApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace clinicaVeterinariaApp.Controllers
 {
@@ -12,6 +13,7 @@ namespace clinicaVeterinariaApp.Controllers
     {
         private readonly IVisiteService _visiteService;
         private readonly IAnimaliService _animaliService;
+
         public VisiteController(IVisiteService visiteService, IAnimaliService animaliService)
         {
             _visiteService = visiteService;
@@ -45,63 +47,50 @@ namespace clinicaVeterinariaApp.Controllers
 
         // POST: Visite/Create
         // Metodo POST: Gestisce l'invio del form per creare una nuova visita
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Create([Bind("AnimaleID,DataVisita,EsameObiettivo,DescrizioneCura")] Visite visita)
-{
-    // Verifica che il modello sia valido
-    Console.WriteLine($"questa e la funzione pe rvisite: {visita.AnimaleID}");
-    Console.WriteLine($"questa e la funzione pe rvisite: {visita.VisitaID}");
-    Console.WriteLine($"questa e la funzione pe rvisite: {visita.DescrizioneCura}");
-    Console.WriteLine($"questa e la funzione pe rvisite: {visita.EsameObiettivo}");
-    Console.WriteLine($"questa e la funzione pe rvisite: {visita.DataVisita}");
-        try
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("AnimaleID,DataVisita,EsameObiettivo,DescrizioneCura")] Visite visita
+        )
         {
-            // Aggiungi la nuova visita tramite il servizio
-            await _visiteService.AddAsync(visita);
+            try
+            {
+                await _visiteService.AddAsync(visita);
 
-            // Reindirizza all'azione Index per visualizzare l'elenco delle visite
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "Si è verificato un errore durante la creazione della visita. Riprova."
+                );
+            }
+            ViewBag.tuttianimali = await _animaliService.GetAllAnimaliAsync();
+            return View(visita);
         }
-        catch (Exception ex)
-        {
-            // Gestione dell'eccezione e log degli errori
-            ModelState.AddModelError("", "Si è verificato un errore durante la creazione della visita. Riprova.");
-            // Log dell'errore (ad esempio, utilizzando un logger)
-        }
-
-    // Se il modello non è valido o si è verificato un errore, ricarica la lista degli animali
-    ViewBag.tuttianimali = await _animaliService.GetAllAnimaliAsync();
-
-    // Ritorna la vista con i dati del form per correggere eventuali errori
-    return View(visita);
-}
-
 
         // POST: Visite/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VisitaID,AnimaleID,DataVisita,EsameObiettivo,DescrizioneCura")] Visite visita)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != visita.VisitaID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _visiteService.UpdateAsync(visita);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    // Log the error
-                    ModelState.AddModelError("", "Unable to save changes.");
-                }
-            }
+            Console.WriteLine($"idddddddddddddddddddddddddddddd: {id}");
+            ViewBag.tuttianimali = await _animaliService.GetAllAnimaliAsync();
+            var visita = await _visiteService.GetByIdAsync(id);
+            Console.WriteLine("visitaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + visita.VisitaID.ToString());
+            Console.WriteLine("visitaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + visita.EsameObiettivo.ToString());
             return View(visita);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditSalva(
+    [Bind("VisitaID,AnimaleID,DataVisita,EsameObiettivo,DescrizioneCura")] Visite visita
+)
+        {
+                await _visiteService.ModificaVisite(visita);
+                return RedirectToAction("Index");
         }
 
         // GET: Visite/Delete/5

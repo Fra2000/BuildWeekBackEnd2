@@ -27,13 +27,19 @@
                 <td>@visita.EsameObiettivo</td>
                 <td>@visita.DescrizioneCura</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@visita.VisitaID">Dettagli</a> |
-                    <a asp-action="Edit" asp-route-id="@visita.VisitaID">Modifica</a> |
-                    <a asp-action="Delete" asp-route-id="@visita.VisitaID">Elimina</a>
+                    <form asp-action="Edit">
+                        <input type="hidden" name="id" value="@visita.VisitaID" />
+                        <button class="btn btn-primary">Modifica</button>
+                    </form> 
+                    <form asp-action="Delete">
+                        <input type="hidden" name="id" value="@visita.VisitaID" />
+                        <button class="btn btn-primary">Elimina</button>
+                    </form>
+                   
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<a asp-action="Create">Aggiungi Nuova Visita</a>
+<a asp-action="Create" class="btn btn-success">Aggiungi Nuova Visita</a>
