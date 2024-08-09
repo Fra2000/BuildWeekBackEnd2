@@ -1,16 +1,31 @@
-﻿@model clinicaVeterinariaApp.Models.Veterinario.Ricoveri
+﻿@model clinicaVeterinariaApp.Models.Veterinario.RicoveriViewModel
 
 @{
-    ViewData["Title"] = "Crea Ricovero";
+    ViewData["Title"] = "Modifica Ricovero";
 }
 
-<h1>Crea Ricovero</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>Ricoveri</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="RicoveriID" />
+
+            <!-- Nome Animale (solo lettura) -->
+            <div class="form-group">
+                <label asp-for="NomeAnimale" class="control-label"></label>
+                <input asp-for="NomeAnimale" class="form-control" readonly />
+            </div>
+
+            <!-- Microchip Number (solo lettura) -->
+            <div class="form-group">
+                <label asp-for="MicrochipNumber" class="control-label"></label>
+                <input asp-for="MicrochipNumber" class="form-control" readonly />
+            </div>
+
+            <!-- Campi modificabili -->
             <div class="form-group">
                 <label asp-for="Tipologia" class="control-label"></label>
                 <input asp-for="Tipologia" class="form-control" />
@@ -32,22 +47,20 @@
                 <span asp-validation-for="Costo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AnimaleID" class="control-label">Animale</label>
-                <select asp-for="AnimaleID" class="form-control" asp-items="ViewBag.Animali"></select>
-                <span asp-validation-for="AnimaleID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Attivo" class="control-label">Ricoverato ?</label>
+                <label asp-for="Attivo" class="control-label"></label>
                 @Html.DropDownListFor(model => model.Attivo, new List<SelectListItem>
                 {
-                new SelectListItem { Text = "Sì", Value = "true" },
-                new SelectListItem { Text = "No", Value = "false" }
+                new SelectListItem { Text = "Sì", Value = "true", Selected = Model.Attivo },
+                new SelectListItem { Text = "No", Value = "false", Selected = !Model.Attivo }
                 }, "Seleziona...", new { @class = "form-control" })
                 <span asp-validation-for="Attivo" class="text-danger"></span>
             </div>
+
+
+
+
             <div class="form-group">
-            <div class="form-group">
-                <input type="submit" value="Crea" class="btn btn-primary" />
+                <input type="submit" value="Salva" class="btn btn-primary" />
             </div>
         </form>
     </div>

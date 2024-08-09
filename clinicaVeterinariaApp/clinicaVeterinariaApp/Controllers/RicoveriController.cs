@@ -42,11 +42,14 @@ namespace clinicaVeterinariaApp.Controllers
                 Costo = r.Costo,
                 AnimaleID = r.AnimaleID,
                 NomeAnimale = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.NomeAnimale,
-                MicrochipBit = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipBit ?? false
+                MicrochipBit = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipBit ?? false,
+                MicrochipNumber = animali.FirstOrDefault(a => a.AnimaleID == r.AnimaleID)?.MicrochipNumber,
+                Attivo = r.Attivo
             }).ToList();
 
             return View(viewModel);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -59,15 +62,38 @@ namespace clinicaVeterinariaApp.Controllers
             }).ToList();
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ricoveri ricovero)
         {
+            // Rimuovi gli errori di validazione per i campi opzionali
+            ModelState.Remove("Animali");
+            ModelState.Remove("ContabilizzazioneRicoveri");
+
             if (ModelState.IsValid)
             {
-                await _ricoveriService.CreateRicoveriAsync(ricovero);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _ricoveriService.CreateRicoveriAsync(ricovero);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception
+                    // For example, using a logger (ILogger<RicoveriController> logger)
+                    // logger.LogError(ex, "An error occurred while creating the Ricoveri.");
+                    ModelState.AddModelError("", "An error occurred while creating the Ricoveri.");
+                }
+            }
+            else
+            {
+                // Log the model validation errors
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                foreach (var error in errors)
+                {
+                    // logger.LogError(error); // Log each error
+                    Console.WriteLine(error); // or write to console
+                }
             }
 
             var animali = await _animaliService.GetAllAnimaliAsync();
@@ -79,6 +105,92 @@ namespace clinicaVeterinariaApp.Controllers
 
             return View(ricovero);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _ricoveriService.DeleteRicoveriAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
+            if (ricovero == null)
+            {
+                return NotFound();
+            }
+
+            var animale = await _animaliService.GetAnimaleByIdAsync(ricovero.AnimaleID);
+            var viewModel = new RicoveriViewModel
+            {
+                RicoveriID = ricovero.RicoveriID,
+                Tipologia = ricovero.Tipologia,
+                Datainizioricovero = ricovero.Datainizioricovero,
+                DataFineRicovero = ricovero.DataFineRicovero,
+                Costo = ricovero.Costo,
+                AnimaleID = ricovero.AnimaleID,
+                NomeAnimale = animale?.NomeAnimale,
+                MicrochipBit = animale?.MicrochipBit ?? false,
+                MicrochipNumber = animale?.MicrochipNumber,
+                Attivo = ricovero.Attivo
+            };
+
+            var animali = await _animaliService.GetAllAnimaliAsync();
+            ViewBag.Animali = animali.Select(a => new SelectListItem
+            {
+                Value = a.AnimaleID.ToString(),
+                Text = a.NomeAnimale
+            }).ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, RicoveriViewModel viewModel)
+        {
+            if (id != viewModel.RicoveriID)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var ricovero = await _ricoveriService.GetRicoveriByIdAsync(id);
+                if (ricovero == null)
+                {
+                    return NotFound();
+                }
+
+                // Aggiorna solo i campi modificabili del modello Ricoveri
+                ricovero.Tipologia = viewModel.Tipologia;
+                ricovero.Datainizioricovero = viewModel.Datainizioricovero;
+                ricovero.DataFineRicovero = viewModel.DataFineRicovero;
+                ricovero.Costo = viewModel.Costo;
+                ricovero.Attivo = viewModel.Attivo;
+
+                await _ricoveriService.UpdateRicoveriAsync(ricovero);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Se il ModelState non è valido, ricarica i dati necessari
+            var animali = await _animaliService.GetAllAnimaliAsync();
+            ViewBag.Animali = animali.Select(a => new SelectListItem
+            {
+                Value = a.AnimaleID.ToString(),
+                Text = a.NomeAnimale
+            }).ToList();
+
+            return View(viewModel);
+        }
+
+
+
 
 
 

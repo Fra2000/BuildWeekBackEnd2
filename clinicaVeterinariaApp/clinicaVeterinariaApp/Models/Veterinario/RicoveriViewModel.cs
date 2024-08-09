@@ -1,4 +1,6 @@
-﻿namespace clinicaVeterinariaApp.Models.Veterinario
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace clinicaVeterinariaApp.Models.Veterinario
 {
     public class RicoveriViewModel
     {
@@ -10,5 +12,8 @@
         public int AnimaleID { get; set; }
         public string NomeAnimale { get; set; }
         public bool MicrochipBit { get; set; }
+        public string MicrochipNumber { get; set; }
+        [Display(Name = "Ricoverato ?")]
+        public bool Attivo { get; set; } = false;
     }
 }
