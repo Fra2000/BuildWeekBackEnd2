@@ -1,15 +1,15 @@
-﻿using clinicaVeterinariaApp.Models.Veterinario;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using clinicaVeterinariaApp.Models.Veterinario;
 
 namespace clinicaVeterinariaApp.Services.Interfaces
 {
     public interface IContabilizzazioneRicoveriService
     {
-        Task<IEnumerable<ContabilizzazioneRicoveri>> GetAllAsync();
-        Task<ContabilizzazioneRicoveri> GetByIdAsync(int id);
-        Task AddAsync(ContabilizzazioneRicoveri contabilizzazione);
-        Task UpdateAsync(ContabilizzazioneRicoveri contabilizzazione);
-        Task DeleteAsync(int id);
+        Task<IEnumerable<ContabilizzazioneRicoveri>> GetAllContabilizzazioniAsync();
+        Task<ContabilizzazioneRicoveri> GetContabilizzazioneByIdAsync(int contabilizzazioneId);
+        Task<ContabilizzazioneRicoveri> CreateContabilizzazioneAsync(ContabilizzazioneRicoveri contabilizzazione);
+        Task UpdateContabilizzazioneAsync(ContabilizzazioneRicoveri contabilizzazione);
+        Task DeleteContabilizzazioneAsync(int contabilizzazioneId);
     }
 }

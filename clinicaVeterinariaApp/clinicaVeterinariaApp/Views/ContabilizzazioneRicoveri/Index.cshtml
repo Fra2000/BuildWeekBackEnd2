@@ -1,37 +1,70 @@
-﻿@model IEnumerable<clinicaVeterinariaApp.Models.Veterinario.ContabilizzazioneRicoveri>
+﻿@model IEnumerable<dynamic>
 
-@{
-    ViewData["Title"] = "Elenco Contabilizzazioni Ricoveri";
+<h1>Elenco Contabilizzazioni per Mese</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crea Nuova Contabilizzazione</a>
+</p>
+
+@foreach (var group in Model)
+{
+    <h3>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@group.Month) @group.Year</h3>
+    <p><strong>Totale Importo per @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@group.Month) @group.Year: €@group.TotalImporto</strong></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome Animale</th>
+                <th>Data Inizio Ricovero</th>
+                <th>Data Contabilizzazione</th>
+                <th>Importo</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in group.Contabilizzazioni)
+            {
+                <tr id="row-@item.ContabilizzazioneID">
+                    <td>@item.ContabilizzazioneID</td>
+                    <td>@item.NomeAnimale</td>
+                    <td>@item.Datainizioricovero.ToShortDateString()</td>
+                    <td>@item.DataContabilizzazione.ToShortDateString()</td>
+                    <td>@item.Importo</td>
+                    <td>
+                        <button class="btn btn-danger delete-button" data-id="@item.ContabilizzazioneID">Elimina</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.delete-button').click(function () {
+                var id = $(this).data('id');
+                var row = $('#row-' + id);
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID Contabilizzazione</th>
-            <th>ID Ricovero</th>
-            <th>Data Contabilizzazione</th>
-            <th>Importo</th>
-            <th>Azioni</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ContabilizzazioneID</td>
-                <td>@item.RicoveroID</td>
-                <td>@item.DataContabilizzazione.ToShortDateString()</td>
-                <td>@item.Importo.ToString("C")</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ContabilizzazioneID">Dettagli</a> |
-                    <a asp-action="Edit" asp-route-id="@item.ContabilizzazioneID">Modifica</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ContabilizzazioneID">Elimina</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<a asp-action="Create">Aggiungi Nuova Contabilizzazione</a>
+                if (confirm('Sei sicuro di voler eliminare questa contabilizzazione?')) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteConfirmed", "ContabilizzazioneRicoveri")',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (response) {
+                            if (response.success) {
+                                row.remove();
+                            } else {
+                                alert('Errore durante l\'eliminazione: ' + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('Si è verificato un errore.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

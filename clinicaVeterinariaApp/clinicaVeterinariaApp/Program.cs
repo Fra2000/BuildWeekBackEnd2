@@ -60,6 +60,7 @@ builder.Services.AddScoped<IProdottoService, ProdottoService>();
 
 
 
+
 builder.Services.AddTransient<IVenditeService, VenditeService>();
 
 // Aggiungi i servizi per i controllori e le viste
