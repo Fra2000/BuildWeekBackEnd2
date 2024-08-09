@@ -10,8 +10,13 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="AnimaleID" class="control-label"></label>
-        <input asp-for="AnimaleID" class="form-control" />
-        <span asp-validation-for="AnimaleID" class="text-danger"></span>
+        <select asp-for="AnimaleID" class="form-control">
+            <option value="" disabled selected>Seleziona un'opzione...</option>
+            @foreach (var animali in ViewBag.tuttianimali)
+            {
+                <option value="@animali.AnimaleID">@animali.NomeAnimale</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="DataVisita" class="control-label"></label>
@@ -28,7 +33,7 @@
         <textarea asp-for="DescrizioneCura" class="form-control"></textarea>
         <span asp-validation-for="DescrizioneCura" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Crea</button>
+    <button class="btn btn-primary">Crea</button>
 </form>
 
 <a href="Index">Torna all'elenco delle visite</a>
